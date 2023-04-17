@@ -1,7 +1,27 @@
-import React from "react";
-import { Building2, Tags, Wallet, Plus, Search } from "lucide-react";
+import React, { useState } from "react";
+import {
+  Building2,
+  Tags,
+  Wallet,
+  Plus,
+  Search,
+  Trash2,
+  Edit,
+} from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import "antd/dist/reset.css";
+import { DatePicker } from "antd";
+import moment from "moment";
+const { RangePicker } = DatePicker;
 
-const Dashboard = () => {
+const DashboardMaster = () => {
+  const Navigate = useNavigate();
+
+  const [selectedDates, setSelectedDates] = useState([]);
+  const startDate = moment(selectedDates[0]?.$d).format("DD/MM/YYYY");
+  const endDate = moment(selectedDates[1]?.$d).format("DD/MM/YYYY");
+  console.log(selectedDates, startDate, endDate);
+
   return (
     <>
       <div className="grid grid-cols-12 gap-6">
@@ -9,7 +29,14 @@ const Dashboard = () => {
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-12 mt-8">
               <div className="intro-y flex items-center h-10">
-                <h2 className="text-lg font-medium truncate mr-5">Dashboard</h2>
+                <h2 className="text-lg font-bold truncate mr-5">Dashboard</h2>
+
+                <div className="sm:ml-auto">
+                  <RangePicker
+                    className="pt-2 pb-2 box"
+                    onChange={(val) => setSelectedDates(val)}
+                  />
+                </div>
               </div>
               <div className="grid grid-cols-12 gap-6 mt-5">
                 <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
@@ -76,18 +103,22 @@ const Dashboard = () => {
             </div>
             <div className="col-span-12 mt-6">
               <div className="intro-y block sm:flex items-center h-10">
-                <h2 className="text-lg font-medium truncate mr-5">Company</h2>
-                <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                  <Search class="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0" />
+                <h2 className="text-lg font-bold truncate mr-5">Company</h2>
+                <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                  <Search className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0" />
                   <input
                     type="text"
-                    class="form-control w-72 box pl-10"
+                    className="form-control w-72 box pl-10"
                     placeholder="Search by Company"
                   />
                 </div>
+
                 <div className="flex items-center sm:ml-auto mt-3 sm:mt-0">
-                  <button class="btn btn-primary">
-                    <Plus class="lucide lucide-activity w-4 h-4 mr-2" />
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => Navigate("/add/company")}
+                  >
+                    <Plus className="lucide lucide-activity w-4 h-4 mr-2" />
                     Add Company
                   </button>
                 </div>
@@ -111,9 +142,12 @@ const Dashboard = () => {
                   <tbody>
                     <tr className="intro-x">
                       <td>
-                        <a href="" className="font-medium whitespace-nowrap">
-                          Digiconnekt
-                        </a>
+                        <NavLink
+                          to="/super"
+                          className="font-medium whitespace-nowrap"
+                        >
+                          Buildnetic
+                        </NavLink>
                       </td>
                       <td>krishna22@gmail.com</td>
                       <td className="text-center">88</td>
@@ -126,17 +160,11 @@ const Dashboard = () => {
                       <td className="table-report__action w-56">
                         <div className="flex justify-center items-center">
                           <a className="flex items-center mr-3" href="">
-                            <i
-                              data-lucide="check-square"
-                              className="w-4 h-4 mr-1"
-                            ></i>
+                            <Edit className="w-4 h-4 mr-1" />
                             Edit
                           </a>
                           <a className="flex items-center text-danger" href="">
-                            <i
-                              data-lucide="trash-2"
-                              className="w-4 h-4 mr-1"
-                            ></i>
+                            <Trash2 className="w-4 h-4 mr-1" />
                             Delete
                           </a>
                         </div>
@@ -159,17 +187,11 @@ const Dashboard = () => {
                       <td className="table-report__action w-56">
                         <div className="flex justify-center items-center">
                           <a className="flex items-center mr-3" href="">
-                            <i
-                              data-lucide="check-square"
-                              className="w-4 h-4 mr-1"
-                            ></i>
+                            <Edit className="w-4 h-4 mr-1" />
                             Edit
                           </a>
                           <a className="flex items-center text-danger" href="">
-                            <i
-                              data-lucide="trash-2"
-                              className="w-4 h-4 mr-1"
-                            ></i>
+                            <Trash2 className="w-4 h-4 mr-1" />
                             Delete
                           </a>
                         </div>
@@ -178,7 +200,7 @@ const Dashboard = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
+              {/* <div className="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
                 <nav className="w-full sm:w-auto sm:mr-auto">
                   <ul className="pagination">
                     <li className="page-item">
@@ -234,7 +256,7 @@ const Dashboard = () => {
                   <option>35</option>
                   <option>50</option>
                 </select>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -243,4 +265,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardMaster;

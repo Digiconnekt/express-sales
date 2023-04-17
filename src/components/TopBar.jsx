@@ -1,8 +1,19 @@
-import React from "react";
-import { Search, Bell, User, Key, LogOut } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Bell, User, Key, LogOut } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/userSlice";
 
 const TopBar = () => {
+  const { loggedUserData } = useSelector((state) => state.user);
+  const Dispatch = useDispatch();
+  const Navigate = useNavigate();
+  const [toogleProfileDropdown, setToogleProfileDropdown] = useState(false);
+
+  const logoutHandler = () => {
+    Dispatch(logout());
+  };
+
   return (
     <>
       <div className="top-bar">
@@ -20,14 +31,6 @@ const TopBar = () => {
           </ol>
         </nav>
         <div className="intro-x relative mr-3 sm:mr-6">
-          <div className="search hidden sm:block">
-            <input
-              type="text"
-              className="search__input form-control border-transparent"
-              placeholder="Search..."
-            />
-            <Search className="search__icon dark:text-slate-500" />
-          </div>
           <a className="notification sm:hidden" href="">
             <Bell className="notification__icon dark:text-slate-500" />
           </a>
@@ -175,50 +178,57 @@ const TopBar = () => {
             </div>
           </div>
         </div>
-        <div className="intro-x dropdown w-8 h-8">
+        <div className="relative intro-x dropdown w-8 h-8">
           <div
+            onClick={() => setToogleProfileDropdown(!toogleProfileDropdown)}
             className="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
-            role="button"
-            aria-expanded="false"
-            data-tw-toggle="dropdown"
           >
             <img
               alt="Midone - HTML Admin Template"
-              src="dist/images/profile-5.jpg"
+              src="../dist/images/profile-5.jpg"
             />
           </div>
-          <div className="dropdown-menu w-56">
-            <ul className="dropdown-content bg-primary text-white">
-              <li className="p-2">
-                <div className="font-medium">Kevin Spacey</div>
-                <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
-                  Super Admin
-                </div>
-              </li>
-              <li>
-                <hr className="dropdown-divider border-white/[0.08]" />
-              </li>
-              <li>
-                <a href="" className="dropdown-item hover:bg-white/5">
-                  <User className="w-4 h-4 mr-2" /> Profile
-                </a>
-              </li>
-              <li>
-                <a href="" className="dropdown-item hover:bg-white/5">
-                  <Key className="w-4 h-4 mr-2" /> Reset Password
-                </a>
-              </li>
-              <li>
-                <hr className="dropdown-divider border-white/[0.08]" />
-              </li>
-              <li>
-                <a href="" className="dropdown-item hover:bg-white/5">
+          {toogleProfileDropdown && (
+            <div className="w-56 absolute right-0 mt-2">
+              <ul className="dropdown-content bg-primary text-white relative w-full rounded-md p-2">
+                <li className="p-2">
+                  <div className="font-medium">Kevin Spacey</div>
+                  <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
+                    Master Admin
+                  </div>
+                </li>
+                <li>
+                  <hr className="dropdown-divider border-white/[0.08] my-2 -mx-2" />
+                </li>
+                <li>
+                  <a
+                    href=""
+                    className="dropdown-item hover:bg-white/5 flex items-center rounded-md p-2"
+                  >
+                    <User className="w-4 h-4 mr-2" /> Profile
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href=""
+                    className="dropdown-item hover:bg-white/5 flex items-center rounded-md p-2"
+                  >
+                    <Key className="w-4 h-4 mr-2" /> Reset Password
+                  </a>
+                </li>
+                <li>
+                  <hr className="dropdown-divider border-white/[0.08] my-2 -mx-2" />
+                </li>
+                <li
+                  onClick={logoutHandler}
+                  className="dropdown-item hover:bg-white/5 flex items-center rounded-md p-2 cursor-pointer"
+                >
                   <LogOut className="w-4 h-4 mr-2" />
                   Logout
-                </a>
-              </li>
-            </ul>
-          </div>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </>
