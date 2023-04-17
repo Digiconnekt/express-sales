@@ -6,6 +6,9 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedUser } from "../redux/userSlice";
 
+import logo from "../dist/images/express/logo-white-text-right.png";
+import loginMain from "../dist/images/illustration.svg";
+
 const Login = () => {
   const user = useSelector((state) => state.user);
   const Dispatch = useDispatch();
@@ -35,17 +38,13 @@ const Login = () => {
         <div className="block xl:grid grid-cols-2 gap-4">
           <div className="hidden xl:flex flex-col min-h-screen">
             <NavLink to="/" className="-intro-x flex items-center pt-5">
-              <img
-                alt="Express Sales"
-                className="w-32"
-                src="../dist/images/express/logo-white-text-right.png"
-              />
+              <img alt="Express Sales" className="w-32" src={logo} />
             </NavLink>
             <div className="my-auto">
               <img
                 alt="Midone - HTML Admin Template"
                 className="-intro-x w-1/2 -mt-16"
-                src="dist/images/illustration.svg"
+                src={loginMain}
               />
               <div className="-intro-x text-white font-medium text-4xl leading-tight mt-10">
                 A few more clicks to

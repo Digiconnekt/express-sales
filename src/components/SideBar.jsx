@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
+import logo from "../dist/images/express/logo-white-text-right.png";
+
 const SideBar = () => {
   const [sideMenuOpen, setSideMenuOpen] = useState({
     company: false,
@@ -54,11 +56,7 @@ const SideBar = () => {
     <>
       <nav className="side-nav">
         <NavLink to="/" className="intro-x flex items-center pl-5 pt-4">
-          <img
-            alt="Express Sales"
-            className="w-32"
-            src="../dist/images/express/logo-white-text-right.png"
-          />
+          <img alt="Express Sales" className="w-32" src={logo} />
         </NavLink>
         <div className="side-nav__devider my-6"></div>
         <ul>
