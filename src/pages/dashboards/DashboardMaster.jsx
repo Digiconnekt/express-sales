@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Building2,
   Tags,
@@ -10,16 +10,33 @@ import {
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "antd/dist/reset.css";
-import { DatePicker } from "antd";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { DatePicker } from "antd";
 const { RangePicker } = DatePicker;
 
 const DashboardMaster = () => {
+  const { loggedUser } = useSelector((state) => state.user);
   const Navigate = useNavigate();
 
+  useEffect(() => {
+    if (loggedUser.email === "super@gmail.com") {
+      Navigate("/super");
+    } else if (loggedUser.email === "admin@gmail.com") {
+      Navigate("/admin");
+    }
+  }, []);
+
+  const today = new Date().toLocaleDateString("en-GB");
   const [selectedDates, setSelectedDates] = useState([]);
-  const startDate = moment(selectedDates[0]?.$d).format("DD/MM/YYYY");
-  const endDate = moment(selectedDates[1]?.$d).format("DD/MM/YYYY");
+  const startDate =
+    selectedDates !== null
+      ? moment(selectedDates[0]?.$d).format("DD/MM/YYYY")
+      : today;
+  const endDate =
+    selectedDates !== null
+      ? moment(selectedDates[1]?.$d).format("DD/MM/YYYY")
+      : today;
   console.log(selectedDates, startDate, endDate);
 
   return (

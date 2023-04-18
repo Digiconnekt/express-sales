@@ -5,6 +5,7 @@ import axiosInstance from "../API/InstanceAPI";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedUser } from "../redux/userSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const user = useSelector((state) => state.user);
@@ -19,11 +20,17 @@ const Login = () => {
 
   const loginHandler = async (loginData, { setSubmitting }) => {
     try {
-      const res = await axiosInstance.post("/login", loginData);
+      const res = await toast.promise(axiosInstance.post("/login", loginData), {
+        pending: "Logging in",
+        success: "Logged in successfully!",
+        error: "An error occurred while logging in.",
+      });
       console.log("🚀 ~ file: Login.jsx:7 ~ loginHandler ~ res:", res);
       Dispatch(loggedUser(res.data));
+      Navigate("/");
     } catch (error) {
       console.error(error);
+      toast.error("An error occurred while logging in.");
     } finally {
       setSubmitting(false);
     }
@@ -59,7 +66,7 @@ const Login = () => {
           </div>
           <div className="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
             <div className="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 px-5 sm:px-8 py-8  rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
-              <h2 className="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+              <h2 className="intro-x font-bold text-2xl xl:text-3xl text-center">
                 Sign In
               </h2>
               <div className="intro-x mt-2 text-slate-400 xl:hidden text-center">
@@ -81,7 +88,9 @@ const Login = () => {
                         className="intro-x login__input form-control py-3 px-4 block"
                         placeholder="Email"
                       />
-                      <ErrorMessage name="email" />
+                      <p className="text-danger mt-1">
+                        <ErrorMessage name="email" />
+                      </p>
 
                       <Field
                         type="password"
@@ -89,9 +98,11 @@ const Login = () => {
                         className="intro-x login__input form-control py-3 px-4 block mt-4"
                         placeholder="Password"
                       />
-                      <ErrorMessage name="password" />
+                      <p className="text-danger mt-1">
+                        <ErrorMessage name="password" />
+                      </p>
                     </div>
-                    <div className="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
+                    {/* <div className="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
                       <div className="flex items-center mr-auto">
                         <input
                           id="remember-me"
@@ -106,7 +117,7 @@ const Login = () => {
                         </label>
                       </div>
                       <a href="">Forgot Password?</a>
-                    </div>
+                    </div> */}
                     <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                       <button
                         type="submit"

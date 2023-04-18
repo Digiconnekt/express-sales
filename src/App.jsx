@@ -9,14 +9,19 @@ import {
   AddCompany,
   AddStore,
   AddSalesEmployee,
-  SingleStore,
+  EmployeeDetails,
 } from "./pages";
 import Add from "./pages/add/Add";
 import Error from "./pages/Error";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ScrollToTop } from "./components";
 
 const App = () => {
   return (
     <>
+      <ScrollToTop />
+
       <div className="flex mt-[4.7rem] md:mt-0">
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -26,7 +31,11 @@ const App = () => {
 
             <Route path="super" element={<DashboardSuper />} />
             <Route path="admin" element={<DashboardAdmin />} />
-            <Route path="/store/:storeId" element={<SingleStore />} />
+
+            <Route
+              path="admin/employee/:employeeId"
+              element={<EmployeeDetails />}
+            />
           </Route>
 
           <Route path="/add" element={<Add />}>
@@ -38,6 +47,8 @@ const App = () => {
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
+
+      <ToastContainer />
     </>
   );
 };

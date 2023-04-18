@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Tags,
   Wallet,
@@ -12,14 +12,29 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "antd/dist/reset.css";
 import { DatePicker } from "antd";
 import moment from "moment";
+import { useSelector } from "react-redux";
 const { RangePicker } = DatePicker;
 
 const DashboardSuper = () => {
+  const { loggedUser } = useSelector((state) => state.user);
   const Navigate = useNavigate();
 
+  useEffect(() => {
+    if (loggedUser.email === "admin@gmail.com") {
+      Navigate("/admin");
+    }
+  }, []);
+
+  const today = new Date().toLocaleDateString("en-GB");
   const [selectedDates, setSelectedDates] = useState([]);
-  const startDate = moment(selectedDates[0]?.$d).format("DD/MM/YYYY");
-  const endDate = moment(selectedDates[1]?.$d).format("DD/MM/YYYY");
+  const startDate =
+    selectedDates !== null
+      ? moment(selectedDates[0]?.$d).format("DD/MM/YYYY")
+      : today;
+  const endDate =
+    selectedDates !== null
+      ? moment(selectedDates[1]?.$d).format("DD/MM/YYYY")
+      : today;
   console.log(selectedDates, startDate, endDate);
 
   return (
@@ -106,21 +121,21 @@ const DashboardSuper = () => {
             <div className="col-span-12 mt-6">
               <div className="intro-y block sm:flex items-center h-10">
                 <h2 className="text-lg font-bold truncate mr-5">Stores</h2>
-                <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                  <Search class="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0" />
+                <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                  <Search className="lucide lucide-map-pin w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0" />
                   <input
                     type="text"
-                    class="form-control w-72 box pl-10"
+                    className="form-control w-72 box pl-10"
                     placeholder="Search by Store"
                   />
                 </div>
 
                 <div className="flex items-center sm:ml-auto mt-3 sm:mt-0">
                   <button
-                    class="btn btn-primary"
+                    className="btn btn-primary"
                     onClick={() => Navigate("/add/store")}
                   >
-                    <Plus class="lucide lucide-activity w-4 h-4 mr-2" />
+                    <Plus className="lucide lucide-activity w-4 h-4 mr-2" />
                     Add Store
                   </button>
                 </div>
@@ -143,7 +158,7 @@ const DashboardSuper = () => {
                     <tr className="intro-x">
                       <td>
                         <NavLink
-                          to="/store/1"
+                          to="/admin"
                           className="font-medium whitespace-nowrap"
                         >
                           Store 1

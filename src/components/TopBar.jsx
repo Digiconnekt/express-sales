@@ -3,6 +3,7 @@ import { Bell, User, Key, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/userSlice";
+import { toast } from "react-toastify";
 
 const TopBar = () => {
   const { loggedUserData } = useSelector((state) => state.user);
@@ -12,6 +13,8 @@ const TopBar = () => {
 
   const logoutHandler = () => {
     Dispatch(logout());
+    Navigate("/login");
+    toast.success("Logged Out");
   };
 
   return (
@@ -55,7 +58,7 @@ const TopBar = () => {
                   <img
                     alt="Midone - HTML Admin Template"
                     className="rounded-full"
-                    src="dist/images/profile-7.jpg"
+                    src="assets/images/profile-7.jpg"
                   />
                   <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                 </div>
@@ -80,7 +83,7 @@ const TopBar = () => {
                   <img
                     alt="Midone - HTML Admin Template"
                     className="rounded-full"
-                    src="dist/images/profile-2.jpg"
+                    src="assets/images/profile-2.jpg"
                   />
                   <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                 </div>
@@ -91,81 +94,6 @@ const TopBar = () => {
                     </a>
                     <div className="text-xs text-slate-400 ml-auto whitespace-nowrap">
                       01:10 PM
-                    </div>
-                  </div>
-                  <div className="w-full truncate text-slate-500 mt-0.5">
-                    Contrary to popular belief, Lorem Ipsum is not simply random
-                    text. It has roots in a piece of classical Latin literature
-                    from 45 BC, making it over 20
-                  </div>
-                </div>
-              </div>
-              <div className="cursor-pointer relative flex items-center mt-5">
-                <div className="w-12 h-12 flex-none image-fit mr-1">
-                  <img
-                    alt="Midone - HTML Admin Template"
-                    className="rounded-full"
-                    src="dist/images/profile-5.jpg"
-                  />
-                  <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
-                </div>
-                <div className="ml-2 overflow-hidden">
-                  <div className="flex items-center">
-                    <a href="#" className="font-medium truncate mr-5">
-                      Johnny Depp
-                    </a>
-                    <div className="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                      05:09 AM
-                    </div>
-                  </div>
-                  <div className="w-full truncate text-slate-500 mt-0.5">
-                    There are many variations of passages of Lorem Ipsum
-                    available, but the majority have suffered alteration in some
-                    form, by injected humour, or randomi
-                  </div>
-                </div>
-              </div>
-              <div className="cursor-pointer relative flex items-center mt-5">
-                <div className="w-12 h-12 flex-none image-fit mr-1">
-                  <img
-                    alt="Midone - HTML Admin Template"
-                    className="rounded-full"
-                    src="dist/images/profile-9.jpg"
-                  />
-                  <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
-                </div>
-                <div className="ml-2 overflow-hidden">
-                  <div className="flex items-center">
-                    <a href="#" className="font-medium truncate mr-5">
-                      Morgan Freeman
-                    </a>
-                    <div className="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                      01:10 PM
-                    </div>
-                  </div>
-                  <div className="w-full truncate text-slate-500 mt-0.5">
-                    Contrary to popular belief, Lorem Ipsum is not simply random
-                    text. It has roots in a piece of classical Latin literature
-                    from 45 BC, making it over 20
-                  </div>
-                </div>
-              </div>
-              <div className="cursor-pointer relative flex items-center mt-5">
-                <div className="w-12 h-12 flex-none image-fit mr-1">
-                  <img
-                    alt="Midone - HTML Admin Template"
-                    className="rounded-full"
-                    src="dist/images/profile-1.jpg"
-                  />
-                  <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
-                </div>
-                <div className="ml-2 overflow-hidden">
-                  <div className="flex items-center">
-                    <a href="#" className="font-medium truncate mr-5">
-                      Denzel Washington
-                    </a>
-                    <div className="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                      03:20 PM
                     </div>
                   </div>
                   <div className="w-full truncate text-slate-500 mt-0.5">
@@ -185,7 +113,7 @@ const TopBar = () => {
           >
             <img
               alt="Midone - HTML Admin Template"
-              src="../assets/images/profile-5.jpg"
+              src="../../assets/images/profile-5.jpg"
             />
           </div>
           {toogleProfileDropdown && (

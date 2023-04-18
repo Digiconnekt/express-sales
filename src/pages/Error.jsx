@@ -11,7 +11,7 @@ const Error = () => {
           <img
             alt="404 Error"
             className="h-48 lg:h-auto"
-            src="/dist/images/error-404.png"
+            src="/assets/images/error-404.png"
           />
         </div>
         <div className="text-white mt-10 lg:mt-0">

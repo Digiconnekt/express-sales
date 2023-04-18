@@ -8,4 +8,4 @@ export { default as AddCompany } from "./add/AddCompany";
 export { default as AddSalesEmployee } from "./add/AddSalesEmployee";
 export { default as AddStore } from "./add/AddStore";
 
-export { default as SingleStore } from "./companyStore/SingleStore";
+export { default as EmployeeDetails } from "./EmployeeDetails";

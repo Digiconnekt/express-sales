@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Plus, Search, Trash2, Edit, BaggageClaim, Users } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "antd/dist/reset.css";
 import { DatePicker } from "antd";
 import moment from "moment";
@@ -9,9 +9,16 @@ const { RangePicker } = DatePicker;
 const DashboardAdmin = () => {
   const Navigate = useNavigate();
 
+  const today = new Date().toLocaleDateString("en-GB");
   const [selectedDates, setSelectedDates] = useState([]);
-  const startDate = moment(selectedDates[0]?.$d).format("DD/MM/YYYY");
-  const endDate = moment(selectedDates[1]?.$d).format("DD/MM/YYYY");
+  const startDate =
+    selectedDates !== null
+      ? moment(selectedDates[0]?.$d).format("DD/MM/YYYY")
+      : today;
+  const endDate =
+    selectedDates !== null
+      ? moment(selectedDates[1]?.$d).format("DD/MM/YYYY")
+      : today;
   console.log(selectedDates, startDate, endDate);
 
   return (
@@ -100,16 +107,6 @@ const DashboardAdmin = () => {
                 <h2 className="text-lg font-bold truncate mr-5">
                   Overall statistics - Sales Employee
                 </h2>
-                <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                  <i
-                    data-lucide="calendar"
-                    className="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                  ></i>
-                  <input
-                    type="text"
-                    className="datepicker form-control sm:w-56 box pl-10"
-                  />
-                </div>
               </div>
               <div className="intro-y box p-5 mt-12 sm:mt-5">
                 <div className="flex flex-col md:flex-row md:items-center">
@@ -284,9 +281,12 @@ const DashboardAdmin = () => {
                   <tbody>
                     <tr className="intro-x">
                       <td>
-                        <a href="" className="font-medium whitespace-nowrap">
-                          Buildnetic
-                        </a>
+                        <NavLink
+                          to="/admin/employee/1"
+                          className="font-medium whitespace-nowrap"
+                        >
+                          Bharat Kumar
+                        </NavLink>
                       </td>
                       <td>krishna22@gmail.com</td>
                       <td>Male</td>
@@ -312,9 +312,12 @@ const DashboardAdmin = () => {
                     </tr>
                     <tr className="intro-x">
                       <td>
-                        <a href="" className="font-medium whitespace-nowrap">
-                          Digiconnekt
-                        </a>
+                        <NavLink
+                          to="/admin/employee/2"
+                          className="font-medium whitespace-nowrap"
+                        >
+                          Jayesh Gandhi
+                        </NavLink>
                       </td>
                       <td>krishna22@gmail.com</td>
                       <td>Male</td>

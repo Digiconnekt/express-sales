@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SideBar, TopBar } from "./components";
+import { Loading, SideBar, TopBar } from "./components";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -10,8 +10,8 @@ const Layout = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if (!loggedUser.accessToken) {
-      // Navigate("/login");
+    if (!loggedUser.email) {
+      Navigate("/login");
       setLoading(false);
     } else {
       setLoading(false);
@@ -21,19 +21,14 @@ const Layout = () => {
   return (
     <>
       {loading ? (
-        <div
-          className="flex flex-1 justify-center items-center"
-          style={{ height: "90vh" }}
-        >
-          <h1 className="text-white text-3xl">Loading...</h1>
-        </div>
+        <Loading />
       ) : (
         <>
           <SideBar />
           <div className="content">
             <TopBar />
 
-            <NavLink index />
+            <NavLink to="/" />
             <NavLink to="/super" />
             <NavLink to="/admin" />
 

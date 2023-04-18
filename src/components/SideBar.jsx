@@ -9,8 +9,11 @@ import {
   User,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SideBar = () => {
+  const { loggedUser } = useSelector((state) => state.user);
+
   const [sideMenuOpen, setSideMenuOpen] = useState({
     company: false,
     store: false,
@@ -57,7 +60,7 @@ const SideBar = () => {
           <img
             alt="Express Sales"
             className="w-32"
-            src="../assets/images/express/logo-white-text-right.png"
+            src="../../assets/images/express/logo-white-text-right.png"
           />
         </NavLink>
         <div className="side-nav__devider my-6"></div>
@@ -70,156 +73,164 @@ const SideBar = () => {
               <div className="side-menu__title">Dashboard</div>
             </a>
           </li>
-          <li onClick={handleCompanyClick}>
-            <a href="#" className="side-menu">
-              <div className="side-menu__icon">
-                <Building2 />
-              </div>
-              <div className="side-menu__title">
-                Companies
-                <div className="side-menu__sub-icon ">
-                  {sideMenuOpen.company ? <ChevronUp /> : <ChevronDown />}
+          {loggedUser.email === "master@gmail.com" && (
+            <li onClick={handleCompanyClick}>
+              <div className="side-menu cursor-pointer">
+                <div className="side-menu__icon">
+                  <Building2 />
+                </div>
+                <div className="side-menu__title">
+                  Companies
+                  <div className="side-menu__sub-icon ">
+                    {sideMenuOpen.company ? <ChevronUp /> : <ChevronDown />}
+                  </div>
                 </div>
               </div>
-            </a>
-            <ul style={sideMenuOpen.company ? sideMenuOpenStyle : {}}>
-              <li>
-                <a href="index.html" className="side-menu">
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> Digiconnekt </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="simple-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> Buildnetic </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="top-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> HireSlick </div>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <ul style={sideMenuOpen.company ? sideMenuOpenStyle : {}}>
+                <li>
+                  <a href="index.html" className="side-menu">
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> Digiconnekt </div>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="simple-menu-light-dashboard-overview-1.html"
+                    className="side-menu"
+                  >
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> Buildnetic </div>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="top-menu-light-dashboard-overview-1.html"
+                    className="side-menu"
+                  >
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> HireSlick </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
 
-          <li onClick={handleStoreClick}>
-            <a href="#" className="side-menu">
-              <div className="side-menu__icon">
-                <Warehouse />
-              </div>
-              <div className="side-menu__title">
-                Stores
-                <div className="side-menu__sub-icon ">
-                  {sideMenuOpen.store ? <ChevronUp /> : <ChevronDown />}
+          {loggedUser.email === "super@gmail.com" && (
+            <li onClick={handleStoreClick}>
+              <div className="side-menu cursor-pointer">
+                <div className="side-menu__icon">
+                  <Warehouse />
+                </div>
+                <div className="side-menu__title">
+                  Stores
+                  <div className="side-menu__sub-icon ">
+                    {sideMenuOpen.store ? <ChevronUp /> : <ChevronDown />}
+                  </div>
                 </div>
               </div>
-            </a>
-            <ul style={sideMenuOpen.store ? sideMenuOpenStyle : {}}>
-              <li>
-                <a href="index.html" className="side-menu">
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> Store 1 </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="simple-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> Store 2 </div>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <ul style={sideMenuOpen.store ? sideMenuOpenStyle : {}}>
+                <li>
+                  <a href="index.html" className="side-menu">
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> Store 1 </div>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="simple-menu-light-dashboard-overview-1.html"
+                    className="side-menu"
+                  >
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> Store 2 </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
 
-          <li onClick={handleEmployeeClick}>
-            <a href="#" className="side-menu">
-              <div className="side-menu__icon">
-                <User />
-              </div>
-              <div className="side-menu__title">
-                Employees
-                <div className="side-menu__sub-icon ">
-                  {sideMenuOpen.employee ? <ChevronUp /> : <ChevronDown />}
+          {loggedUser.email === "super@gmail.com" && (
+            <li onClick={handleEmployeeClick}>
+              <div className="side-menu cursor-pointer">
+                <div className="side-menu__icon">
+                  <User />
+                </div>
+                <div className="side-menu__title">
+                  Employees
+                  <div className="side-menu__sub-icon ">
+                    {sideMenuOpen.employee ? <ChevronUp /> : <ChevronDown />}
+                  </div>
                 </div>
               </div>
-            </a>
-            <ul style={sideMenuOpen.employee ? sideMenuOpenStyle : {}}>
-              <li>
-                <a href="index.html" className="side-menu">
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> Bharat Kumar </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="simple-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> John Doe </div>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <ul style={sideMenuOpen.employee ? sideMenuOpenStyle : {}}>
+                <li>
+                  <a href="index.html" className="side-menu">
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> Bharat Kumar </div>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="simple-menu-light-dashboard-overview-1.html"
+                    className="side-menu"
+                  >
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> John Doe </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
 
-          <li onClick={handleMyStoreClick}>
-            <a href="#" className="side-menu">
-              <div className="side-menu__icon">
-                <Warehouse />
-              </div>
-              <div className="side-menu__title">
-                My Stores
-                <div className="side-menu__sub-icon ">
-                  {sideMenuOpen.myStore ? <ChevronUp /> : <ChevronDown />}
+          {loggedUser.email === "admin@gmail.com" && (
+            <li onClick={handleMyStoreClick}>
+              <div className="side-menu cursor-pointer">
+                <div className="side-menu__icon">
+                  <Warehouse />
+                </div>
+                <div className="side-menu__title">
+                  My Stores
+                  <div className="side-menu__sub-icon ">
+                    {sideMenuOpen.myStore ? <ChevronUp /> : <ChevronDown />}
+                  </div>
                 </div>
               </div>
-            </a>
-            <ul style={sideMenuOpen.myStore ? sideMenuOpenStyle : {}}>
-              <li>
-                <a href="index.html" className="side-menu">
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> My Store 1 </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="simple-menu-light-dashboard-overview-1.html"
-                  className="side-menu"
-                >
-                  <div className="side-menu__icon">
-                    <Box />
-                  </div>
-                  <div className="side-menu__title"> My Store 2 </div>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <ul style={sideMenuOpen.myStore ? sideMenuOpenStyle : {}}>
+                <li>
+                  <a href="index.html" className="side-menu">
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> My Store 1 </div>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="simple-menu-light-dashboard-overview-1.html"
+                    className="side-menu"
+                  >
+                    <div className="side-menu__icon">
+                      <Box />
+                    </div>
+                    <div className="side-menu__title"> My Store 2 </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
         </ul>
       </nav>
     </>
