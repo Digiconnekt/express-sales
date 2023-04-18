@@ -4,8 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/userSlice";
 
-import profileIcon from "../dist/images/profile-5.jpg";
-
 const TopBar = () => {
   const { loggedUserData } = useSelector((state) => state.user);
   const Dispatch = useDispatch();
@@ -185,7 +183,10 @@ const TopBar = () => {
             onClick={() => setToogleProfileDropdown(!toogleProfileDropdown)}
             className="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
           >
-            <img alt="Midone - HTML Admin Template" src={profileIcon} />
+            <img
+              alt="Midone - HTML Admin Template"
+              src="../assets/images/profile-5.jpg"
+            />
           </div>
           {toogleProfileDropdown && (
             <div className="w-56 absolute right-0 mt-2">
