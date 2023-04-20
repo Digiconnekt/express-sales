@@ -1,25 +1,10 @@
-import React, { useState } from "react";
-import { Plus, Search, Trash2, Edit, BaggageClaim, Users } from "lucide-react";
+import React from "react";
+import { Plus, Search, Trash2, Edit } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import "antd/dist/reset.css";
-import { DatePicker } from "antd";
-import moment from "moment";
-const { RangePicker } = DatePicker;
+import { DashboardTitleAndDate, DashboardTopCard } from "../../components";
 
 const DashboardAdmin = () => {
   const Navigate = useNavigate();
-
-  const today = new Date().toLocaleDateString("en-GB");
-  const [selectedDates, setSelectedDates] = useState([]);
-  const startDate =
-    selectedDates !== null
-      ? moment(selectedDates[0]?.$d).format("DD/MM/YYYY")
-      : today;
-  const endDate =
-    selectedDates !== null
-      ? moment(selectedDates[1]?.$d).format("DD/MM/YYYY")
-      : today;
-  console.log(selectedDates, startDate, endDate);
 
   return (
     <>
@@ -27,79 +12,19 @@ const DashboardAdmin = () => {
         <div className="col-span-12">
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-12 mt-8">
-              <div className="intro-y flex items-center h-10">
-                <h2 className="text-lg font-bold truncate mr-5">
-                  Dashboard Admin
-                </h2>
-
-                <div className="sm:ml-auto">
-                  <RangePicker
-                    className="pt-2 pb-2 box"
-                    onChange={(val) => setSelectedDates(val)}
-                  />
-                </div>
-              </div>
+              <DashboardTitleAndDate title="Admin Dashboard" />
               <div className="grid grid-cols-12 gap-6 mt-5">
-                <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                  <div className="report-box zoom-in">
-                    <div
-                      className="flex items-center box p-5"
-                      style={{ justifyContent: "space-around" }}
-                    >
-                      <div>
-                        <div className="text-base text-slate-500 mt-1">
-                          Sales Employees
-                        </div>
-                        <div className="text-3xl font-medium leading-8 mt-6">
-                          47
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <Users className="w-12 h-12 text-primary" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                  <div className="report-box zoom-in">
-                    <div
-                      className="flex items-center box p-5"
-                      style={{ justifyContent: "space-around" }}
-                    >
-                      <div>
-                        <div className="text-base text-slate-500 mt-1">
-                          Customers
-                        </div>
-                        <div className="text-3xl font-medium leading-8 mt-6">
-                          321
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <Users className="w-12 h-12 text-primary" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                  <div className="report-box zoom-in">
-                    <div
-                      className="flex items-center box p-5"
-                      style={{ justifyContent: "space-around" }}
-                    >
-                      <div>
-                        <div className="text-base text-slate-500 mt-1">
-                          Orders
-                        </div>
-                        <div className="text-3xl font-medium leading-8 mt-6">
-                          214
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <BaggageClaim className="w-12 h-12 text-primary" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <DashboardTopCard
+                  title="Sales Employees"
+                  value="35"
+                  icon="users"
+                />
+                <DashboardTopCard title="Customers" value="56" icon="users" />
+                <DashboardTopCard
+                  title="Orders"
+                  value="95"
+                  icon="baggageClaim"
+                />
               </div>
             </div>
             <div className="col-span-12 lg:col-span-6 mt-8">

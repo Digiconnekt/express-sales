@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {
-  Building2,
-  Tags,
-  Wallet,
-  Plus,
-  Search,
-  Trash2,
-  Edit,
-} from "lucide-react";
+import React, { useEffect } from "react";
+import { Plus, Search, Trash2, Edit } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import "antd/dist/reset.css";
-import moment from "moment";
 import { useSelector } from "react-redux";
-import { DatePicker } from "antd";
-const { RangePicker } = DatePicker;
+import { DashboardTitleAndDate, DashboardTopCard } from "../../components";
 
 const DashboardMaster = () => {
   const { loggedUser } = useSelector((state) => state.user);
@@ -27,95 +16,25 @@ const DashboardMaster = () => {
     }
   }, []);
 
-  const today = new Date().toLocaleDateString("en-GB");
-  const [selectedDates, setSelectedDates] = useState([]);
-  const startDate =
-    selectedDates !== null
-      ? moment(selectedDates[0]?.$d).format("DD/MM/YYYY")
-      : today;
-  const endDate =
-    selectedDates !== null
-      ? moment(selectedDates[1]?.$d).format("DD/MM/YYYY")
-      : today;
-  console.log(selectedDates, startDate, endDate);
-
   return (
     <>
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12">
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-12 mt-8">
-              <div className="intro-y flex items-center h-10">
-                <h2 className="text-lg font-bold truncate mr-5">Dashboard</h2>
-
-                <div className="sm:ml-auto">
-                  <RangePicker
-                    className="pt-2 pb-2 box"
-                    onChange={(val) => setSelectedDates(val)}
-                  />
-                </div>
-              </div>
+              <DashboardTitleAndDate title="Master Dashboard" />
               <div className="grid grid-cols-12 gap-6 mt-5">
-                <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                  <div className="report-box zoom-in">
-                    <div
-                      className="flex items-center box p-5"
-                      style={{ justifyContent: "space-around" }}
-                    >
-                      <div>
-                        <div className="text-base text-slate-500 mt-1">
-                          Total Company
-                        </div>
-                        <div className="text-3xl font-medium leading-8 mt-6">
-                          47
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <Building2 className="w-12 h-12 text-primary" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                  <div className="report-box zoom-in">
-                    <div
-                      className="flex items-center box p-5"
-                      style={{ justifyContent: "space-around" }}
-                    >
-                      <div>
-                        <div className="text-base text-slate-500 mt-1">
-                          Total Sales
-                        </div>
-                        <div className="text-3xl font-medium leading-8 mt-6">
-                          321
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <Tags className="w-12 h-12 text-primary" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                  <div className="report-box zoom-in">
-                    <div
-                      className="flex items-center box p-5"
-                      style={{ justifyContent: "space-around" }}
-                    >
-                      <div>
-                        <div className="text-base text-slate-500 mt-1">
-                          Total Income
-                        </div>
-                        <div className="text-3xl font-medium leading-8 mt-6">
-                          $ 214
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <Wallet className="w-12 h-12 text-primary" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <DashboardTopCard
+                  title="Total Company"
+                  value="47"
+                  icon="building2"
+                />
+                <DashboardTopCard title="Total Sales" value="325" icon="tags" />
+                <DashboardTopCard
+                  title="Total Income"
+                  value="$ 247"
+                  icon="wallet"
+                />
               </div>
             </div>
             <div className="col-span-12 mt-6">
