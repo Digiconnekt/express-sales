@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 
 const AddCompany = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    contact_number: "",
+    gst_number: "",
+    location: "",
+    status: "",
+  });
+
+  const onChangeHandler = (e) => {
+    const handlerName = e.target.name;
+    const handlerValue = e.target.value;
+
+    setFormData(() => ({
+      ...formData,
+      [handlerName]: handlerValue,
+    }));
+  };
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   return (
     <>
       <div className="intro-y flex items-center mt-8">
@@ -11,10 +35,10 @@ const AddCompany = () => {
           <div className="intro-y box">
             <div id="form-validation" className="p-5">
               <div className="preview">
-                <form className="validate-form">
+                <form className="validate-form" onSubmit={formSubmitHandler}>
                   <div className="input-form">
                     <label
-                      for="validation-form-1"
+                      htmlFor="validation-form-1"
                       className="form-label w-full flex flex-col sm:flex-row"
                     >
                       Company Name
@@ -28,8 +52,9 @@ const AddCompany = () => {
                       name="name"
                       className="form-control"
                       placeholder="Buildnetic"
-                      minlength="2"
+                      minLength="2"
                       required
+                      onChange={onChangeHandler}
                     />
                   </div>
                   <div className="input-form mt-3">
@@ -49,11 +74,12 @@ const AddCompany = () => {
                       className="form-control"
                       placeholder="example@gmail.com"
                       required
+                      onChange={onChangeHandler}
                     />
                   </div>
                   <div className="input-form mt-3">
                     <label
-                      for="validation-form-2"
+                      htmlFor="validation-form-2"
                       className="form-label w-full flex flex-col sm:flex-row"
                     >
                       Contact Number
@@ -64,15 +90,16 @@ const AddCompany = () => {
                     <input
                       id="validation-form-2"
                       type="text"
-                      name="mobile"
+                      name="contact_number"
                       className="form-control"
                       placeholder="83669485226"
                       required
+                      onChange={onChangeHandler}
                     />
                   </div>
                   <div className="input-form mt-3">
                     <label
-                      for="validation-form-1"
+                      htmlFor="validation-form-1"
                       className="form-label w-full flex flex-col sm:flex-row"
                     >
                       GST Number
@@ -83,15 +110,16 @@ const AddCompany = () => {
                     <input
                       id="validation-form-1"
                       type="text"
-                      name="name"
+                      name="gst_number"
                       className="form-control"
                       placeholder="829257267556"
                       required
+                      onChange={onChangeHandler}
                     />
                   </div>
                   <div className="input-form mt-3">
                     <label
-                      for="validation-form-6"
+                      htmlFor="validation-form-6"
                       className="form-label w-full flex flex-col sm:flex-row"
                     >
                       Location
@@ -104,34 +132,43 @@ const AddCompany = () => {
                       className="form-control"
                       name="location"
                       placeholder="Location"
-                      minlength="10"
+                      minLength="10"
                       required
+                      onChange={onChangeHandler}
                     ></textarea>
                   </div>
                   <div className="input-form mt-3">
                     <label>Status</label>
-                    <div class="flex flex-col sm:flex-row mt-2">
-                      <div class="form-check mr-2">
+                    <div className="flex flex-col sm:flex-row mt-2">
+                      <div className="form-check mr-2">
                         <input
                           id="radio-switch-4"
-                          class="form-check-input"
+                          className="form-check-input"
                           type="radio"
-                          name="horizontal_radio_button"
-                          value="horizontal-radio-chris-evans"
+                          name="status"
+                          value="1"
+                          onChange={onChangeHandler}
                         />
-                        <label class="form-check-label" for="radio-switch-4">
+                        <label
+                          className="form-check-label"
+                          htmlFor="radio-switch-4"
+                        >
                           Active
                         </label>
                       </div>
-                      <div class="form-check mr-2 mt-2 sm:mt-0">
+                      <div className="form-check mr-2 mt-2 sm:mt-0">
                         <input
                           id="radio-switch-5"
-                          class="form-check-input"
+                          className="form-check-input"
                           type="radio"
-                          name="horizontal_radio_button"
-                          value="horizontal-radio-liam-neeson"
+                          name="status"
+                          value="0"
+                          onChange={onChangeHandler}
                         />
-                        <label class="form-check-label" for="radio-switch-5">
+                        <label
+                          className="form-check-label"
+                          htmlFor="radio-switch-5"
+                        >
                           Deactive
                         </label>
                       </div>

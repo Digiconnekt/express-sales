@@ -73,7 +73,7 @@ const SideBar = () => {
               <div className="side-menu__title">Dashboard</div>
             </a>
           </li>
-          {loggedUser.email === "master@gmail.com" && (
+          {loggedUser?.data?.role === "master" && (
             <li onClick={handleCompanyClick}>
               <div className="side-menu cursor-pointer">
                 <div className="side-menu__icon">
@@ -121,7 +121,7 @@ const SideBar = () => {
             </li>
           )}
 
-          {loggedUser.email === "super@gmail.com" && (
+          {loggedUser?.data?.role === "super-admin" && (
             <li onClick={handleStoreClick}>
               <div className="side-menu cursor-pointer">
                 <div className="side-menu__icon">
@@ -158,7 +158,7 @@ const SideBar = () => {
             </li>
           )}
 
-          {loggedUser.email === "super@gmail.com" && (
+          {loggedUser?.data?.role === "super-admin" && (
             <li onClick={handleEmployeeClick}>
               <div className="side-menu cursor-pointer">
                 <div className="side-menu__icon">
@@ -195,7 +195,7 @@ const SideBar = () => {
             </li>
           )}
 
-          {loggedUser.email === "admin@gmail.com" && (
+          {loggedUser?.data?.role === "admin" && (
             <li onClick={handleMyStoreClick}>
               <div className="side-menu cursor-pointer">
                 <div className="side-menu__icon">

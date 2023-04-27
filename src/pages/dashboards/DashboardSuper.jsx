@@ -9,7 +9,7 @@ const DashboardSuper = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedUser.email === "admin@gmail.com") {
+    if (loggedUser?.data?.role === "admin") {
       Navigate("/admin");
     }
   }, []);

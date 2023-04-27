@@ -10,7 +10,7 @@ const Layout = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if (!loggedUser.email) {
+    if (!loggedUser?.data?.role) {
       Navigate("/login");
       setLoading(false);
     } else {

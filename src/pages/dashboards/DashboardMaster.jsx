@@ -9,9 +9,9 @@ const DashboardMaster = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedUser.email === "super@gmail.com") {
+    if (loggedUser?.data?.role === "super-admin") {
       Navigate("/super");
-    } else if (loggedUser.email === "admin@gmail.com") {
+    } else if (loggedUser?.data?.role === "admin") {
       Navigate("/admin");
     }
   }, []);
@@ -26,13 +26,17 @@ const DashboardMaster = () => {
               <div className="grid grid-cols-12 gap-6 mt-5">
                 <DashboardTopCard
                   title="Total Company"
-                  value="47"
+                  value={loggedUser.home["Total Company"]}
                   icon="building2"
                 />
-                <DashboardTopCard title="Total Sales" value="325" icon="tags" />
+                <DashboardTopCard
+                  title="Total Sales"
+                  value={loggedUser.home["Total Sales"]}
+                  icon="tags"
+                />
                 <DashboardTopCard
                   title="Total Income"
-                  value="$ 247"
+                  value={`$ ${loggedUser.home["Total Income"]}`}
                   icon="wallet"
                 />
               </div>

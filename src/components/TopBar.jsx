@@ -6,7 +6,8 @@ import { logout } from "../redux/userSlice";
 import { toast } from "react-toastify";
 
 const TopBar = () => {
-  const { loggedUserData } = useSelector((state) => state.user);
+  const { loggedUser } = useSelector((state) => state.user);
+
   const Dispatch = useDispatch();
   const Navigate = useNavigate();
   const [toogleProfileDropdown, setToogleProfileDropdown] = useState(false);
@@ -58,7 +59,7 @@ const TopBar = () => {
                   <img
                     alt="Midone - HTML Admin Template"
                     className="rounded-full"
-                    src="assets/images/profile-7.jpg"
+                    src="../assets/images/profile-7.jpg"
                   />
                   <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                 </div>
@@ -83,7 +84,7 @@ const TopBar = () => {
                   <img
                     alt="Midone - HTML Admin Template"
                     className="rounded-full"
-                    src="assets/images/profile-2.jpg"
+                    src="../assets/images/profile-2.jpg"
                   />
                   <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                 </div>
@@ -120,9 +121,9 @@ const TopBar = () => {
             <div className="w-56 absolute right-0 mt-2">
               <ul className="dropdown-content bg-primary text-white relative w-full rounded-md p-2">
                 <li className="p-2">
-                  <div className="font-medium">Kevin Spacey</div>
+                  <div className="font-medium">{loggedUser.data.name}</div>
                   <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
-                    Master Admin
+                    {loggedUser.data.role}
                   </div>
                 </li>
                 <li>
