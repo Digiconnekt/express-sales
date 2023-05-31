@@ -1,12 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus, Search, Trash2, Edit } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { DashboardTitleAndDate, DashboardTopCard } from "../../components";
+import axiosInstance from "../../API/InstanceAPI";
 
 const DashboardMaster = () => {
-  const { loggedUser } = useSelector((state) => state.user);
   const Navigate = useNavigate();
+  const { loggedUser } = useSelector((state) => state.user);
+
+  const [companiesList, setCompaniesList] = useState([]);
+  const companiesListHandler = async () => {
+    try {
+      const res = await axiosInstance.get("/companies", {
+        headers: {
+          Authorization: `Bearer ${loggedUser.data.token}`,
+        },
+      });
+      setCompaniesList(res.data);
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: DashboardMaster.jsx:18 ~ companiesListHandler ~ error:",
+        error
+      );
+    }
+  };
 
   useEffect(() => {
     if (loggedUser?.data?.role === "super-admin") {
@@ -14,6 +32,8 @@ const DashboardMaster = () => {
     } else if (loggedUser?.data?.role === "admin") {
       Navigate("/admin");
     }
+
+    companiesListHandler();
   }, []);
 
   return (
@@ -80,63 +100,47 @@ const DashboardMaster = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="intro-x">
-                      <td>
-                        <NavLink
-                          to="/super"
-                          className="font-medium whitespace-nowrap"
-                        >
-                          Buildnetic
-                        </NavLink>
-                      </td>
-                      <td>krishna22@gmail.com</td>
-                      <td className="text-center">88</td>
-                      <td className="text-center">88</td>
-                      <td className="w-40">
-                        <div className="flex items-center justify-center text-success">
-                          Active
-                        </div>
-                      </td>
-                      <td className="table-report__action w-56">
-                        <div className="flex justify-center items-center">
-                          <a className="flex items-center mr-3" href="">
-                            <Edit className="w-4 h-4 mr-1" />
-                            Edit
-                          </a>
-                          <a className="flex items-center text-danger" href="">
-                            <Trash2 className="w-4 h-4 mr-1" />
-                            Delete
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="intro-x">
-                      <td>
-                        <a href="" className="font-medium whitespace-nowrap">
-                          Digiconnekt
-                        </a>
-                      </td>
-                      <td>krishna22@gmail.com</td>
-                      <td className="text-center">88</td>
-                      <td className="text-center">88</td>
-                      <td className="w-40">
-                        <div className="flex items-center justify-center text-success">
-                          Active
-                        </div>
-                      </td>
-                      <td className="table-report__action w-56">
-                        <div className="flex justify-center items-center">
-                          <a className="flex items-center mr-3" href="">
-                            <Edit className="w-4 h-4 mr-1" />
-                            Edit
-                          </a>
-                          <a className="flex items-center text-danger" href="">
-                            <Trash2 className="w-4 h-4 mr-1" />
-                            Delete
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
+                    {companiesList.map((elem, i) => (
+                      <tr className="intro-x" key={i}>
+                        <td>
+                          <NavLink
+                            to="/super"
+                            className="font-medium whitespace-nowrap"
+                          >
+                            {elem.name}
+                          </NavLink>
+                        </td>
+                        <td>{elem.company_email}</td>
+                        <td className="text-center">{elem.contact_number}</td>
+                        <td className="text-center">88</td>
+                        <td className="w-40">
+                          {elem.status === 1 ? (
+                            <div className="flex items-center justify-center text-success">
+                              Active
+                            </div>
+                          ) : (
+                            <div className="flex items-center justify-center text-danger">
+                              Inactive
+                            </div>
+                          )}
+                        </td>
+                        <td className="table-report__action w-56">
+                          <div className="flex justify-center items-center">
+                            <a className="flex items-center mr-3" href="">
+                              <Edit className="w-4 h-4 mr-1" />
+                              Edit
+                            </a>
+                            <a
+                              className="flex items-center text-danger"
+                              href=""
+                            >
+                              <Trash2 className="w-4 h-4 mr-1" />
+                              Delete
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
