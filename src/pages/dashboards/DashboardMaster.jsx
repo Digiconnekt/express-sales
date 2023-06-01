@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { DashboardTitleAndDate, DashboardTopCard } from "../../components";
 import axiosInstance from "../../API/InstanceAPI";
+import { toast } from "react-toastify";
 
 const DashboardMaster = () => {
   const Navigate = useNavigate();
@@ -23,6 +24,36 @@ const DashboardMaster = () => {
         "🚀 ~ file: DashboardMaster.jsx:18 ~ companiesListHandler ~ error:",
         error
       );
+    }
+  };
+
+  const deleteCompany = async (company) => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete the Company?"
+    );
+
+    if (confirmation) {
+      try {
+        await toast.promise(
+          axiosInstance.delete(`/companies/${company}`, {
+            headers: {
+              Authorization: `Bearer ${loggedUser.data.token}`,
+            },
+          }),
+          {
+            pending: "Deleting Company",
+            success: "Company deleted successfully!",
+            error: "Failed to delete company.",
+          }
+        );
+
+        window.location.reload();
+      } catch (error) {
+        console.log(
+          "🚀 ~ file: DashboardMaster.jsx:33 ~ deleteCompany ~ error:",
+          error
+        );
+      }
     }
   };
 
@@ -126,17 +157,21 @@ const DashboardMaster = () => {
                         </td>
                         <td className="table-report__action w-56">
                           <div className="flex justify-center items-center">
-                            <a className="flex items-center mr-3" href="">
+                            <NavLink
+                              to={`/edit/company/${elem.id}`}
+                              className="flex items-center mr-3"
+                              title="Edit"
+                            >
                               <Edit className="w-4 h-4 mr-1" />
-                              Edit
-                            </a>
-                            <a
+                            </NavLink>
+                            <div
                               className="flex items-center text-danger"
-                              href=""
+                              title="Delete"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => deleteCompany(elem.id)}
                             >
                               <Trash2 className="w-4 h-4 mr-1" />
-                              Delete
-                            </a>
+                            </div>
                           </div>
                         </td>
                       </tr>

@@ -16,6 +16,8 @@ import Error from "./pages/Error";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ScrollToTop } from "./components";
+import Edit from "./pages/edit/Edit";
+import EditCompany from "./pages/edit/EditCompany";
 
 const App = () => {
   return (
@@ -42,6 +44,10 @@ const App = () => {
             <Route path="company" element={<AddCompany />} />
             <Route path="store" element={<AddStore />} />
             <Route path="sales-employee" element={<AddSalesEmployee />} />
+          </Route>
+
+          <Route path="/edit" element={<Edit />}>
+            <Route path="company/:id" element={<EditCompany />} />
           </Route>
 
           <Route path="*" element={<Error />} />

@@ -1,47 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axiosInstance from "../../API/InstanceAPI";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddCompany = () => {
+const EditCompany = () => {
+  const { id } = useParams();
   const Navigate = useNavigate();
   const { loggedUser } = useSelector((state) => state.user);
-  const [formData, setFormData] = useState({
-    name: "",
-    company_email: "",
-    contact_email: "",
-    contact_number: "",
-    password: "",
-    gst: "",
-    location: "",
-    status: "",
-  });
+  const [data, setData] = useState({});
 
   const onChangeHandler = (e) => {
     const handlerName = e.target.name;
     const handlerValue = e.target.value;
 
-    setFormData(() => ({
-      ...formData,
+    setData(() => ({
+      ...data,
       [handlerName]: handlerValue,
     }));
   };
 
-  const formSubmitHandler = async (e) => {
+  const getData = async () => {
+    try {
+      const res = await axiosInstance.get(`/companies/${id}`, {
+        headers: {
+          Authorization: `Bearer ${loggedUser.data.token}`,
+        },
+      });
+      setData(res.data);
+    } catch (error) {
+      console.log("🚀 ~ file: EditCompany.jsx:37 ~ getData ~ error:", error);
+    }
+  };
+
+  const formUpdateHandler = async (e) => {
     e.preventDefault();
 
     try {
       const res = await toast.promise(
-        axiosInstance.post("/companies", formData, {
+        axiosInstance.put(`/companies/${id}`, data, {
           headers: {
             Authorization: `Bearer ${loggedUser.data.token}`,
           },
         }),
         {
-          pending: "Adding a Company",
-          success: "Company added Successfully!",
-          error: "Falied to add Company.",
+          pending: "Updating a Company",
+          success: "Company updated Successfully!",
+          error: "Falied to update Company.",
         }
       );
       Navigate("/");
@@ -52,9 +57,11 @@ const AddCompany = () => {
         error
       );
     }
-
-    console.log(formData);
   };
+
+  useEffect(() => {
+    getData();
+  }, [id]);
 
   return (
     <>
@@ -66,7 +73,7 @@ const AddCompany = () => {
           <div className="intro-y box">
             <div id="form-validation" className="p-5">
               <div className="preview">
-                <form className="validate-form" onSubmit={formSubmitHandler}>
+                <form className="validate-form" onSubmit={formUpdateHandler}>
                   <div className="input-form">
                     <label
                       htmlFor="name"
@@ -85,6 +92,7 @@ const AddCompany = () => {
                       placeholder="Company Name"
                       minLength="2"
                       required
+                      value={data.name || ""}
                       onChange={onChangeHandler}
                     />
                   </div>
@@ -105,6 +113,7 @@ const AddCompany = () => {
                       className="form-control"
                       placeholder="example@gmail.com"
                       required
+                      value={data.company_email || ""}
                       onChange={onChangeHandler}
                     />
                   </div>
@@ -125,6 +134,7 @@ const AddCompany = () => {
                       className="form-control"
                       placeholder="example@gmail.com"
                       required
+                      value={data.contact_email || ""}
                       onChange={onChangeHandler}
                     />
                   </div>
@@ -145,6 +155,7 @@ const AddCompany = () => {
                       className="form-control"
                       placeholder="83669485226"
                       required
+                      value={data.contact_number || ""}
                       onChange={onChangeHandler}
                     />
                   </div>
@@ -165,6 +176,7 @@ const AddCompany = () => {
                       className="form-control"
                       placeholder="Password"
                       required
+                      value={data.password || ""}
                       onChange={onChangeHandler}
                     />
                   </div>
@@ -181,10 +193,11 @@ const AddCompany = () => {
                     <input
                       id="gst_number"
                       type="text"
-                      name="gst"
+                      name="gst_number"
                       className="form-control"
                       placeholder="829257267556"
                       required
+                      value={data.gst_number || ""}
                       onChange={onChangeHandler}
                     />
                   </div>
@@ -204,6 +217,7 @@ const AddCompany = () => {
                       name="location"
                       placeholder="Location"
                       required
+                      value={data.location || ""}
                       onChange={onChangeHandler}
                     ></textarea>
                   </div>
@@ -241,7 +255,7 @@ const AddCompany = () => {
                     </div>
                   </div>
                   <button type="submit" className="btn btn-primary mt-5">
-                    Add Company
+                    Update Company
                   </button>
                 </form>
               </div>
@@ -253,4 +267,4 @@ const AddCompany = () => {
   );
 };
 
-export default AddCompany;
+export default EditCompany;

@@ -59,7 +59,7 @@ const TopBar = () => {
                   <img
                     alt="Midone - HTML Admin Template"
                     className="rounded-full"
-                    src="../assets/images/profile-7.jpg"
+                    src="../../assets/images/profile-7.jpg"
                   />
                   <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                 </div>
@@ -84,7 +84,7 @@ const TopBar = () => {
                   <img
                     alt="Midone - HTML Admin Template"
                     className="rounded-full"
-                    src="../assets/images/profile-2.jpg"
+                    src="../../assets/images/profile-2.jpg"
                   />
                   <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                 </div>
