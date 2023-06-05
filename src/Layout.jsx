@@ -10,7 +10,7 @@ const Layout = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if (!loggedUser?.data?.role) {
+    if (!loggedUser?.data?.token) {
       Navigate("/login");
       setLoading(false);
     } else {
