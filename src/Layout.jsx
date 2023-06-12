@@ -6,36 +6,31 @@ import { useSelector } from "react-redux";
 const Layout = () => {
   const [loading, setLoading] = useState(true);
   const { loggedUser } = useSelector((state) => state.user);
-  console.log("🚀 ~ file: Layout.jsx:8 ~ Layout ~ loggedUser:", loggedUser);
   const Navigate = useNavigate();
 
   useEffect(() => {
     if (!loggedUser?.data?.token) {
       Navigate("/login");
-      setLoading(false);
-    } else {
-      setLoading(false);
     }
+    setLoading(false);
   }, [loggedUser, Navigate]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <SideBar />
-          <div className="content">
-            <TopBar />
+      <SideBar />
+      <div className="content">
+        <TopBar />
 
-            <NavLink to="/" />
-            <NavLink to="/super" />
-            <NavLink to="/admin" />
+        <NavLink to="/" />
+        <NavLink to="/super" />
+        <NavLink to="/admin" />
 
-            <Outlet />
-          </div>
-        </>
-      )}
+        <Outlet />
+      </div>
     </>
   );
 };

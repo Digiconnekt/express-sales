@@ -15,7 +15,7 @@ const DashboardMaster = () => {
     try {
       const res = await axiosInstance.get("/companies", {
         headers: {
-          Authorization: `Bearer ${loggedUser.data.token}`,
+          Authorization: `Bearer ${loggedUser?.data?.token}`,
         },
       });
       setCompaniesList(res.data);
@@ -37,7 +37,7 @@ const DashboardMaster = () => {
         await toast.promise(
           axiosInstance.delete(`/companies/${company}`, {
             headers: {
-              Authorization: `Bearer ${loggedUser.data.token}`,
+              Authorization: `Bearer ${loggedUser?.data?.token}`,
             },
           }),
           {
@@ -77,17 +77,21 @@ const DashboardMaster = () => {
               <div className="grid grid-cols-12 gap-6 mt-5">
                 <DashboardTopCard
                   title="Total Company"
-                  value={loggedUser.home["Total Company"]}
+                  value={
+                    loggedUser.home ? loggedUser?.home["Total Company"] : 0
+                  }
                   icon="building2"
                 />
                 <DashboardTopCard
                   title="Total Sales"
-                  value={loggedUser.home["Total Sales"]}
+                  value={loggedUser.home ? loggedUser?.home["Total Sales"] : 0}
                   icon="tags"
                 />
                 <DashboardTopCard
                   title="Total Income"
-                  value={`$ ${loggedUser.home["Total Income"]}`}
+                  value={`$ ${
+                    loggedUser.home ? loggedUser?.home["Total Income"] : 0
+                  }`}
                   icon="wallet"
                 />
               </div>
