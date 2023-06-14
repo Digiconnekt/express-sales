@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Bell, User, Key, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import axiosInstance from "../API/InstanceAPI";
 import { logout } from "../redux/userSlice";
 import { toast } from "react-toastify";
 
@@ -12,10 +13,26 @@ const TopBar = () => {
   const Navigate = useNavigate();
   const [toogleProfileDropdown, setToogleProfileDropdown] = useState(false);
 
-  const logoutHandler = () => {
-    Dispatch(logout());
-    Navigate("/login");
-    toast.success("Logged Out");
+  const logoutHandler = async () => {
+    try {
+      await toast.promise(
+        axiosInstance.get("/logout", {
+          headers: {
+            Authorization: `Bearer ${loggedUser?.data?.token}`,
+          },
+        }),
+        {
+          pending: "Logging out",
+          success: "Logged out successfully!",
+          error: "An error occurred while logging out.",
+        }
+      );
+      Dispatch(logout());
+      Navigate("/login");
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while logging out.");
+    }
   };
 
   return (
@@ -121,9 +138,9 @@ const TopBar = () => {
             <div className="w-56 absolute right-0 mt-2">
               <ul className="dropdown-content bg-primary text-white relative w-full rounded-md p-2">
                 <li className="p-2">
-                  <div className="font-medium">{loggedUser.data.name}</div>
+                  <div className="font-medium">{loggedUser?.data?.name}</div>
                   <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
-                    {loggedUser.data.role}
+                    {loggedUser?.data?.role}
                   </div>
                 </li>
                 <li>
