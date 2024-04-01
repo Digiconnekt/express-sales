@@ -33,7 +33,7 @@ const Tippy = (props) => {
     }
 
     if (tippyRef.current !== null) {
-      init < C > (tippyRef.current, props);
+      init(tippyRef.current, props);
     }
   }, [props.content]);
 
