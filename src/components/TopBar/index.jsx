@@ -17,7 +17,7 @@ function Main() {
 
   const user = useSelector((state) => state.auth.user);
   const { data, error, isLoading, logoutReq } = useLogout();
-  const [salesReportFilter, setSalesReportFilter] = useState<string>();
+  const [salesReportFilter, setSalesReportFilter] = useState();
 
   return (
     <>

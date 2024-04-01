@@ -1,5 +1,5 @@
 import { Transition } from "react-transition-group";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import {
   Link,
   Navigate,
@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { selectSideMenu } from "../../stores/sideMenuSlice";
 import { useAppSelector } from "../../stores/hooks";
-import { FormattedMenu, linkTo, nestedMenu, enter, leave } from "./side-menu";
+import { linkTo, nestedMenu, enter, leave } from "./side-menu";
 import Lucide from "../../base-components/Lucide";
 import logoUrl from "../../assets/images/logo.svg";
 import clsx from "clsx";
@@ -18,14 +18,11 @@ import MobileMenu from "../../components/MobileMenu";
 import DarkModeSwitcher from "../../components/DarkModeSwitcher";
 import SideMenuTooltip from "../../components/SideMenuTooltip";
 import { useSelector } from "react-redux";
-import { RootState } from "../../stores/store";
 
 function Main() {
   const location = useLocation();
-  const user = useSelector((state: RootState) => state.auth.user);
-  const [formattedMenu, setFormattedMenu] = useState<
-    Array<FormattedMenu | "divider">
-  >([]);
+  const user = useSelector((state) => state.auth.user);
+  const [formattedMenu, setFormattedMenu] = useState([]);
   const sideMenuStore = useAppSelector(selectSideMenu);
   const sideMenu = () => nestedMenu(sideMenuStore, location);
 
@@ -177,15 +174,7 @@ function Main() {
   );
 }
 
-function Menu(props: {
-  className?: string;
-  menu: FormattedMenu;
-  formattedMenuState: [
-    (FormattedMenu | "divider")[],
-    Dispatch<SetStateAction<(FormattedMenu | "divider")[]>>
-  ];
-  level: "first" | "second" | "third";
-}) {
+function Menu(props) {
   const navigate = useNavigate();
   const [formattedMenu, setFormattedMenu] = props.formattedMenuState;
 
@@ -213,7 +202,7 @@ function Menu(props: {
         },
         props.className,
       ])}
-      onClick={(event: React.MouseEvent) => {
+      onClick={(event) => {
         event.preventDefault();
         linkTo(props.menu, navigate);
         setFormattedMenu([...formattedMenu]);
@@ -263,9 +252,7 @@ function Menu(props: {
   );
 }
 
-function Divider<C extends React.ElementType>(
-  props: { as?: C } & React.ComponentPropsWithoutRef<C>
-) {
+function Divider(props) {
   const { className, ...computedProps } = props;
   const Component = props.as || "div";
 
