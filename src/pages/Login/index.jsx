@@ -4,18 +4,25 @@ import illustrationUrl from "../../assets/images/illustration.svg";
 import { FormInput } from "../../base-components/Form";
 import Button from "../../base-components/Button";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useState } from "react";
 import useLogin from "../../apis/login/Login";
+import { useSelector } from "react-redux";
+import LoadingIcon from "../../base-components/LoadingIcon";
 
 function Main() {
-  const { data, error, isLoading, loginReq } = useLogin();
+  const user = useSelector((state) => state.auth.user);
+  if (user) {
+    return <Navigate to="/" />;
+  }
+
+  const { error, isLoading, loginReq } = useLogin();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -23,7 +30,7 @@ function Main() {
     }));
   };
 
-  const signInHandler = (e: FormEvent<HTMLButtonElement>) => {
+  const signInHandler = (e) => {
     e.preventDefault();
     loginReq(formData);
   };
@@ -85,6 +92,11 @@ function Main() {
                     name="email"
                     value={formData.email}
                     onChange={onChangeHandler}
+                    error={
+                      error?.message?.email
+                        ? error?.message?.email[0]
+                        : undefined
+                    }
                   />
                   <FormInput
                     type="password"
@@ -93,6 +105,11 @@ function Main() {
                     name="password"
                     value={formData.password}
                     onChange={onChangeHandler}
+                    error={
+                      error?.message?.password
+                        ? error?.message?.password[0]
+                        : undefined
+                    }
                   />
                 </div>
                 <div className="flex mt-4 text-xs intro-x text-slate-600 dark:text-slate-500 sm:text-sm">
@@ -104,8 +121,16 @@ function Main() {
                     variant="primary"
                     className="w-full px-4 py-3 align-top"
                     onClick={signInHandler}
+                    disabled={isLoading}
                   >
                     Login
+                    {isLoading && (
+                      <LoadingIcon
+                        icon="oval"
+                        color="white"
+                        className="w-4 h-4 ml-2"
+                      />
+                    )}
                   </Button>
                 </div>
               </div>

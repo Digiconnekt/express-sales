@@ -7,9 +7,16 @@ import clsx from "clsx";
 import { useNavigate } from "react-router";
 import Litepicker from "../../base-components/Litepicker";
 import { useState } from "react";
+import useLogout from "../../apis/logout/Logout";
+import { useSelector } from "react-redux";
+
+import LoadingIcon from "../../base-components/LoadingIcon";
 
 function Main() {
   const navigate = useNavigate();
+
+  const user = useSelector((state) => state.auth.user);
+  const { data, error, isLoading, logoutReq } = useLogout();
   const [salesReportFilter, setSalesReportFilter] = useState<string>();
 
   return (
@@ -64,7 +71,7 @@ function Main() {
           </Popover.Button>
           <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
             <div className="mb-5 font-medium">Notifications</div>
-            {_.take(fakerData, 5).map((faker, fakerKey) => (
+            {/* {_.take(fakerData, 5).map((faker, fakerKey) => (
               <div
                 key={fakerKey}
                 className={clsx([
@@ -94,7 +101,7 @@ function Main() {
                   </div>
                 </div>
               </div>
-            ))}
+            ))} */}
           </Popover.Panel>
         </Popover>
         {/* END: Notifications  */}
@@ -109,12 +116,12 @@ function Main() {
           </Menu.Button>
           <Menu.Items className="w-56 mt-px text-white bg-primary">
             <Menu.Header className="font-normal">
-              <div className="font-medium">{fakerData[0].users[0].name}</div>
+              <div className="font-medium">{user?.name}</div>
               <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
-                {fakerData[0].jobs[0]}
+                {user?.role}
               </div>
             </Menu.Header>
-            <Menu.Divider className="bg-white/[0.08]" />
+            {/* <Menu.Divider className="bg-white/[0.08]" />
             <Menu.Item
               className="hover:bg-white/5"
               onClick={() => navigate("/profile")}
@@ -126,10 +133,17 @@ function Main() {
               onClick={() => navigate("/reset-password")}
             >
               <Lucide icon="Lock" className="w-4 h-4 mr-2" /> Reset Password
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Divider className="bg-white/[0.08]" />
-            <Menu.Item className="hover:bg-white/5">
-              <Lucide icon="ToggleRight" className="w-4 h-4 mr-2" /> Logout
+            <Menu.Item className="hover:bg-white/5" onClick={logoutReq}>
+              Logout
+              {isLoading && (
+                <LoadingIcon
+                  icon="oval"
+                  color="white"
+                  className="w-4 h-4 ml-2"
+                />
+              )}
             </Menu.Item>
           </Menu.Items>
         </Menu>

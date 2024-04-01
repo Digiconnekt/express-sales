@@ -8,14 +8,39 @@ import RevenueLineChart from "../../components/RevenueLineChart";
 import OrderLineChart from "../../components/OrderLineChart";
 import ReportPieChart from "../../components/ReportPieChart";
 import Table from "../../base-components/Table";
-
 import {
   PreviewComponent,
   Preview,
 } from "../../base-components/PreviewComponent";
 import { Tab } from "../../base-components/Headless";
+import { Link, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+const companiesList = [
+  {
+    id: "1",
+    name: "Buildnetic",
+    isActive: true,
+  },
+  {
+    id: "2",
+    name: "Digiconnekt",
+    isActive: false,
+  },
+  {
+    id: "3",
+    name: "Google",
+    isActive: true,
+  },
+];
 
 function Main() {
+  const user = useSelector((state) => state.auth.user);
+
+  if (user && user.role === "master") {
+    return <Navigate to={`/company/${user.id}`} />;
+  }
+
   return (
     <div className="grid grid-cols-12 gap-6">
       <div className="col-span-12">
@@ -23,6 +48,27 @@ function Main() {
           {/* BEGIN: General Report */}
           <div className="col-span-12 mt-8">
             <div className="grid grid-cols-12 gap-6 mt-5">
+              <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                <div
+                  className={clsx([
+                    "relative zoom-in",
+                    "before:content-[''] before:w-[90%] before:shadow-[0px_3px_20px_#0000000b] before:bg-slate-50 before:h-full before:mt-3 before:absolute before:rounded-md before:mx-auto before:inset-x-0 before:dark:bg-darkmode-400/70",
+                  ])}
+                >
+                  <div className="p-5 box">
+                    <div className="flex">
+                      <Lucide
+                        icon="ShoppingCart"
+                        className="w-[28px] h-[28px] text-primary"
+                      />
+                    </div>
+                    <div className="mt-6 text-3xl font-medium leading-8">7</div>
+                    <div className="mt-1 text-base text-slate-500">
+                      Companies
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                 <div
                   className={clsx([
@@ -203,10 +249,10 @@ function Main() {
                 <Table.Thead>
                   <Table.Tr>
                     <Table.Th className="border-b-0 whitespace-nowrap">
-                      COMPANY ID
+                      COMPANY NAME
                     </Table.Th>
                     <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                      COMPANY NAME
+                      COMPANY ID
                     </Table.Th>
                     <Table.Th className="text-center border-b-0 whitespace-nowrap">
                       STATUS
@@ -217,29 +263,28 @@ function Main() {
                   </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>
-                  {_.take(fakerData, 4).map((faker, fakerKey) => (
-                    <Table.Tr key={fakerKey} className="intro-x">
+                  {companiesList.map((company, i) => (
+                    <Table.Tr key={i} className="intro-x">
                       <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                        <a href="" className="font-medium whitespace-nowrap">
-                          {faker.products[0].name}
-                        </a>
-                        <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                          {faker.products[0].category}
-                        </div>
+                        <Link
+                          to={`/company/${company.id}`}
+                          className="font-medium whitespace-nowrap"
+                        >
+                          {company.name}
+                        </Link>
                       </Table.Td>
                       <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                        {faker.stocks[0]}
+                        {company.id}
                       </Table.Td>
                       <Table.Td className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                         <div
                           className={clsx([
                             "flex items-center justify-center",
-                            { "text-success": faker.trueFalse[0] },
-                            { "text-danger": !faker.trueFalse[0] },
+                            { "text-success": company.isActive },
+                            { "text-danger": !company.isActive },
                           ])}
                         >
-                          <Lucide icon="CheckSquare" className="w-4 h-4 mr-2" />
-                          {faker.trueFalse[0] ? "Active" : "Inactive"}
+                          {company.isActive ? "Active" : "Inactive"}
                         </div>
                       </Table.Td>
                       <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">

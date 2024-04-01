@@ -74,7 +74,7 @@ function Main(props: MainProps) {
             },
             color: getColor("slate.500", 0.8),
             callback: function (value) {
-              return "$" + value;
+              return "₹" + value;
             },
           },
           grid: {
