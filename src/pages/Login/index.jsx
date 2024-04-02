@@ -12,11 +12,8 @@ import LoadingIcon from "../../base-components/LoadingIcon";
 
 function Main() {
   const user = useSelector((state) => state.auth.user);
-  if (user) {
-    return <Navigate to="/" />;
-  }
-
   const { error, isLoading, loginReq } = useLogin();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,6 +31,10 @@ function Main() {
     e.preventDefault();
     loginReq(formData);
   };
+
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>

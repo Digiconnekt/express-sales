@@ -29,6 +29,7 @@ const useLogin = () => {
         })
       );
       toast.success("Logged in successfully");
+
       if (res?.data?.data?.role === "superAdmin") {
         navigate("/");
       } else if (res?.data?.data?.role === "master") {

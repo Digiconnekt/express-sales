@@ -13,6 +13,8 @@ function Main() {
   const { id } = useParams();
   const user = useSelector((state) => state.auth.user);
 
+  // return <CompanyDashboard />;
+
   if (user && user.role === "master" && user.id == id) {
     return <CompanyDashboard />;
   } else if (user && user.id !== id) {
