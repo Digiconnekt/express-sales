@@ -30,16 +30,17 @@ const useLogin = () => {
       );
       toast.success("Logged in successfully");
 
-      if (res?.data?.data?.role === "superAdmin") {
+      if (res?.data?.data?.role === "master") {
         navigate("/");
-      } else if (res?.data?.data?.role === "master") {
-        navigate(`/company/${res?.data?.data?.user_id}`);
       }
+      // else if (res?.data?.data?.role === "master") {
+      //   navigate(`/company/${res?.data?.data?.user_id}`);
+      // }
     } catch (error) {
       setError(error?.response?.data);
       toast.error(
-        typeof error.response.data.message === "string"
-          ? error.response.data.message
+        typeof error.response.data.msg === "string"
+          ? error.response.data.msg
           : "Failed to login"
       );
       console.log("login error", error);

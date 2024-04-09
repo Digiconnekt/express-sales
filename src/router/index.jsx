@@ -1,10 +1,12 @@
 import { useRoutes } from "react-router-dom";
 import SideMenu from "../layouts/SideMenu";
-import SuperAdminDashboard from "../pages/SuperAdminDashboard";
+import AdminDashboard from "../pages/AdminDashboard";
 import CompanyDashboard from "../pages/CompanyDashboard";
 import StoreDashboard from "../pages/StoreDashboard";
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
+
+import CompanyCreate from "../pages/Company/Create";
 
 function Router() {
   const routes = [
@@ -14,7 +16,11 @@ function Router() {
       children: [
         {
           path: "/",
-          element: <SuperAdminDashboard />,
+          element: <AdminDashboard />,
+        },
+        {
+          path: "/company/create",
+          element: <CompanyCreate />,
         },
         {
           path: "/company/:id",

@@ -13,15 +13,15 @@ function Main() {
   const { id } = useParams();
   const user = useSelector((state) => state.auth.user);
 
-  // return <CompanyDashboard />;
+  return <CompanyDashboard />;
 
-  if (user && user.role === "master" && user.id == id) {
-    return <CompanyDashboard />;
-  } else if (user && user.id !== id) {
-    return <Navigate to={`/company/${user.id}`} />;
-  } else {
-    return null;
-  }
+  // if (user && user.role === "master" && user.id == id) {
+  //   return <CompanyDashboard />;
+  // } else if (user && user.id !== id) {
+  //   return <Navigate to={`/company/${user.id}`} />;
+  // } else {
+  //   return null;
+  // }
 }
 
 const storeList = [
@@ -46,7 +46,7 @@ const CompanyDashboard = () => {
   const { companyDashboardReq, data, error, isLoading } = useCompanyDashboard();
 
   useEffect(() => {
-    companyDashboardReq();
+    // companyDashboardReq();
   }, []);
 
   console.log("data", data);
