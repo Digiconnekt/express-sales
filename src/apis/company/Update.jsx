@@ -17,9 +17,14 @@ const useUpdateCompany = () => {
       const res = await axiosInstance.put(`/companies/${id}`, payload, headers);
       setData(res?.data);
       console.log("update company res", res);
+      if (res.data.status) {
+        toast.success(res?.data?.msg || "Successfully updated Company");
+      } else {
+        toast.error(res?.data?.error_msg || "Failed to update Company");
+      }
     } catch (error) {
       setError(error?.response?.data);
-      toast.error(error.response.data.message || "Failed to update company");
+      toast.error(error?.response?.data?.message || "Failed to update company");
       console.log("update company error", error);
     } finally {
       setIsLoading(false);

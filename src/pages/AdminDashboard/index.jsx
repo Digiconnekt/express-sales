@@ -191,6 +191,9 @@ function Main() {
                             CONTACT EMAIL
                           </Table.Th>
                           <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                            CONTACT NO.
+                          </Table.Th>
+                          <Table.Th className="text-center border-b-0 whitespace-nowrap">
                             GST NO.
                           </Table.Th>
                           <Table.Th className="text-center border-b-0 whitespace-nowrap">
@@ -226,6 +229,11 @@ function Main() {
                                 : "NA"}
                             </Table.Td>
                             <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                              {company?.contact_number
+                                ? company?.contact_number
+                                : "NA"}
+                            </Table.Td>
+                            <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                               {company?.gst_number ? company?.gst_number : "NA"}
                             </Table.Td>
                             <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
@@ -243,36 +251,28 @@ function Main() {
                               </div>
                             </Table.Td>
                             <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
-                              <Menu>
-                                <Menu.Button as={Button} variant="">
+                              <div className="flex items-center justify-center">
+                                <div
+                                  className="flex items-center mr-3 cursor-pointer"
+                                  onClick={() => editModalHandler(company?.id)}
+                                >
                                   <Lucide
-                                    icon="MoreVertical"
-                                    className="block mx-auto"
+                                    icon="CheckSquare"
+                                    className="w-4 h-4 mr-1"
                                   />
-                                </Menu.Button>
-                                <Menu.Items className="w-48">
-                                  <Menu.Item
-                                    onClick={() =>
-                                      editModalHandler(company?.id)
-                                    }
-                                  >
-                                    <Lucide
-                                      icon="Edit2"
-                                      className="w-4 h-4 mr-2"
-                                    />
-                                    Edit
-                                  </Menu.Item>
-                                  <Menu.Item
-                                    onClick={() => deleteHandler(company?.id)}
-                                  >
-                                    <Lucide
-                                      icon="Trash"
-                                      className="w-4 h-4 mr-2"
-                                    />
-                                    Delete
-                                  </Menu.Item>
-                                </Menu.Items>
-                              </Menu>
+                                  Edit
+                                </div>
+                                <div
+                                  className="flex items-center text-danger cursor-pointer"
+                                  onClick={() => deleteHandler(company?.id)}
+                                >
+                                  <Lucide
+                                    icon="Trash2"
+                                    className="w-4 h-4 mr-1"
+                                  />
+                                  Delete
+                                </div>
+                              </div>
                             </Table.Td>
                           </Table.Tr>
                         ))}
@@ -313,6 +313,7 @@ function Main() {
           data={dataUpdateCompany}
           error={errorUpdateCompany}
           submitReq={updateCompanyReq}
+          reFetch={reFetchAllCompanies}
         />
       </>
     );

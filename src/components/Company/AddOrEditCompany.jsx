@@ -1,5 +1,5 @@
-import { Fragment, useRef, useState, useEffect } from "react";
-import { FormInput, FormLabel, FormSwitch } from "../../base-components/Form";
+import { useState, useEffect } from "react";
+import { FormInput, FormLabel, FormSelect } from "../../base-components/Form";
 import Button from "../../base-components/Button";
 import LoadingIcon from "../../base-components/LoadingIcon";
 
@@ -10,15 +10,17 @@ const AddOrEditCompany = ({
   isLoading,
   submitReq,
   inputData,
+  setModalOpen,
 }) => {
   const [formData, setFormData] = useState({
     name: "",
     company_email: "",
     contact_email: "",
+    contact_number: "",
     gst: "",
     location: "",
     password: "",
-    status: "",
+    status: "1",
   });
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const AddOrEditCompany = ({
         name: inputData?.name || "",
         company_email: inputData?.company_email || "",
         contact_email: inputData?.contact_email || "",
+        contact_number: inputData?.contact_number || "",
         gst: inputData?.gst || "",
         location: inputData?.location || "",
         password: inputData?.password || "",
@@ -47,7 +50,6 @@ const AddOrEditCompany = ({
   const submitHandler = (e) => {
     e.preventDefault();
     type === "add" ? submitReq(formData) : submitReq(inputData?.id, formData);
-    console.log("formData", formData);
   };
 
   return (
@@ -100,6 +102,23 @@ const AddOrEditCompany = ({
         />
       </div>
       <div className="mt-3">
+        <FormLabel htmlFor="contact-number">Contact Number</FormLabel>
+        <FormInput
+          id="contact-number"
+          type="text"
+          className="w-full"
+          placeholder="998562395"
+          name="contact_number"
+          value={formData.contact_number}
+          onChange={onChangeHandler}
+          error={
+            error?.message?.contact_number
+              ? error?.message?.contact_number[0]
+              : undefined
+          }
+        />
+      </div>
+      <div className="mt-3">
         <FormLabel htmlFor="gst">GST Number</FormLabel>
         <FormInput
           id="gst"
@@ -144,20 +163,27 @@ const AddOrEditCompany = ({
       </div>
       <div className="mt-3">
         <label>Active Status</label>
-        <FormSwitch className="mt-2">
-          <FormSwitch.Input type="checkbox" />
-        </FormSwitch>
+        <FormSelect
+          className="mt-2 sm:mr-2"
+          name="status"
+          value={formData.status}
+          onChange={onChangeHandler}
+        >
+          <option value="1">Active</option>
+          <option value="2">Inactive</option>
+        </FormSelect>
       </div>
       <div className="mt-5 text-right">
-        {/* <Button
-          type="button"
-          variant="outline-secondary"
-          className="w-24 mr-1"
-          onClick={closeModalHandler}
-          ref={cancelButtonRef}
-        >
-          Cancel
-        </Button> */}
+        {type === "edit" && (
+          <Button
+            type="button"
+            variant="outline-secondary"
+            className="w-24 mr-1"
+            onClick={() => setModalOpen(false)}
+          >
+            Cancel
+          </Button>
+        )}
         <Button
           type="button"
           variant="primary"

@@ -20,6 +20,8 @@ FormCheck.Label = (props) => {
 };
 
 FormCheck.Input = (props) => {
+  console.log("props", props);
+
   return (
     <input
       {...props}

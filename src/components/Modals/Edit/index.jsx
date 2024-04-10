@@ -14,6 +14,7 @@ const index = ({
   data,
   error,
   submitReq,
+  reFetch,
 }) => {
   const cancelButtonRef = useRef(null);
 
@@ -22,6 +23,16 @@ const index = ({
       showReq(selectedId);
     }
   }, [selectedId]);
+
+  useEffect(() => {
+    if (data) {
+      if (data.status) {
+        setOpen(false);
+        setSelectedId(null);
+        reFetch();
+      }
+    }
+  }, [data]);
 
   return (
     <>
@@ -67,6 +78,7 @@ const index = ({
                         error={error}
                         submitReq={submitReq}
                         inputData={dataShow}
+                        setModalOpen={setOpen}
                       />
                     )}
                   </div>

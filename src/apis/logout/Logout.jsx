@@ -21,7 +21,7 @@ const useLogout = () => {
 
       // if (res) {
       // setData(res?.data);
-      console.log("Logout success");
+      // console.log("Logout success res", res);
       dispatch(logout());
       navigate("/login");
       // }
