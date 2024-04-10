@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
 
 import CompanyCreate from "../pages/Company/Create";
+import StoreCreate from "../pages/Store/Create";
 
 function Router() {
   const routes = [
@@ -19,16 +20,20 @@ function Router() {
           element: <AdminDashboard />,
         },
         {
+          path: "/company",
+          element: <CompanyDashboard />,
+        },
+        {
           path: "/company/create",
           element: <CompanyCreate />,
         },
         {
-          path: "/company/:id",
-          element: <CompanyDashboard />,
+          path: "/store",
+          element: <StoreDashboard />,
         },
         {
-          path: "/store/:id",
-          element: <StoreDashboard />,
+          path: "/store/create",
+          element: <StoreCreate />,
         },
       ],
     },

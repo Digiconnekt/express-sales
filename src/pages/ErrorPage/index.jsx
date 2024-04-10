@@ -7,7 +7,7 @@ function Main() {
   return (
     <>
       <div className="py-2">
-        <DarkModeSwitcher />
+        {/* <DarkModeSwitcher /> */}
         <div className="container">
           {/* BEGIN: Error Page */}
           <div className="flex flex-col items-center justify-center h-screen text-center error-page lg:flex-row lg:text-left">

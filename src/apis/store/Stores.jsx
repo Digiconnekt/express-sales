@@ -20,7 +20,7 @@ const useAllStores = () => {
     } catch (error) {
       setError(error?.response?.data);
       toast.error(error.response.data.message || "Failed to fetch all stores");
-      // console.log("all stores error", error);
+      console.log("all stores error", error);
     } finally {
       setIsLoading(false);
     }

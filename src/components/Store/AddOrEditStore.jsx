@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { FormInput, FormLabel, FormSelect } from "../../base-components/Form";
 import Button from "../../base-components/Button";
 import LoadingIcon from "../../base-components/LoadingIcon";
-import { useNavigate } from "react-router-dom";
 
-const AddOrEditCompany = ({
+const AddOrEditStore = ({
   type,
   data,
   error,
@@ -13,17 +12,14 @@ const AddOrEditCompany = ({
   inputData,
   setModalOpen,
 }) => {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     name: "",
-    company_email: "",
-    contact_email: "",
-    contact_number: "",
-    gst_number: "",
-    location: "",
+    email_id: "",
+    store_location: "",
+    contact_no: "",
+    company_id: "",
     password: "",
-    status: "1",
+    status: "",
   });
 
   useEffect(() => {
@@ -31,11 +27,10 @@ const AddOrEditCompany = ({
       setFormData((prevData) => ({
         ...prevData,
         name: inputData?.name || "",
-        company_email: inputData?.company_email || "",
-        contact_email: inputData?.contact_email || "",
-        contact_number: inputData?.contact_number || "",
-        gst_number: inputData?.gst_number || "",
-        location: inputData?.location || "",
+        email_id: inputData?.email_id || "",
+        store_location: inputData?.store_location || "",
+        contact_no: inputData?.contact_no || "",
+        company_id: inputData?.company_id || "",
         password: inputData?.password || "",
         status: inputData?.status || "",
       }));
@@ -55,21 +50,15 @@ const AddOrEditCompany = ({
     type === "add" ? submitReq(formData) : submitReq(inputData?.id, formData);
   };
 
-  useEffect(() => {
-    if (data) {
-      navigate("/");
-    }
-  }, [data]);
-
   return (
     <>
       <div>
-        <FormLabel htmlFor="name">Company Name *</FormLabel>
+        <FormLabel htmlFor="name">Store Name</FormLabel>
         <FormInput
           id="name"
           type="text"
           className="w-full"
-          placeholder="Bata"
+          placeholder="Store"
           name="name"
           value={formData.name}
           onChange={onChangeHandler}
@@ -77,55 +66,16 @@ const AddOrEditCompany = ({
         />
       </div>
       <div className="mt-3">
-        <FormLabel htmlFor="company-email">Company Email *</FormLabel>
+        <FormLabel htmlFor="email">Email</FormLabel>
         <FormInput
-          id="company-email"
+          id="email"
           type="email"
           className="w-full"
-          placeholder="bata@gmail.com"
-          name="company_email"
-          value={formData.company_email}
+          placeholder="store@gmail.com"
+          name="email_id"
+          value={formData.email_id}
           onChange={onChangeHandler}
-          error={error?.company_email ? error?.company_email[0] : undefined}
-        />
-      </div>
-      <div className="mt-3">
-        <FormLabel htmlFor="contact-email">Contact Email</FormLabel>
-        <FormInput
-          id="contact-email"
-          type="email"
-          className="w-full"
-          placeholder="contact@gmail.com"
-          name="contact_email"
-          value={formData.contact_email}
-          onChange={onChangeHandler}
-          error={error?.contact_email ? error?.contact_email[0] : undefined}
-        />
-      </div>
-      <div className="mt-3">
-        <FormLabel htmlFor="contact-number">Contact Number *</FormLabel>
-        <FormInput
-          id="contact-number"
-          type="text"
-          className="w-full"
-          placeholder="998562395"
-          name="contact_number"
-          value={formData.contact_number}
-          onChange={onChangeHandler}
-          error={error?.contact_number ? error?.contact_number[0] : undefined}
-        />
-      </div>
-      <div className="mt-3">
-        <FormLabel htmlFor="gst_number">GST Number</FormLabel>
-        <FormInput
-          id="gst_number"
-          type="text"
-          className="w-full"
-          placeholder="22AAAAA0000A1Z5"
-          name="gst_number"
-          value={formData.gst_number}
-          onChange={onChangeHandler}
-          error={error?.gst_number ? error?.gst_number[0] : undefined}
+          error={error?.email_id ? error?.email_id[0] : undefined}
         />
       </div>
       <div className="mt-3">
@@ -135,29 +85,40 @@ const AddOrEditCompany = ({
           type="text"
           className="w-full"
           placeholder="Mumbai"
-          name="location"
-          value={formData.location}
+          name="store_location"
+          value={formData.store_location}
           onChange={onChangeHandler}
-          error={error?.location ? error?.location[0] : undefined}
+          error={error?.store_location ? error?.store_location[0] : undefined}
         />
       </div>
-      {type === "add" && (
-        <div className="mt-3">
-          <FormLabel htmlFor="password">Password *</FormLabel>
-          <FormInput
-            id="password"
-            type="password"
-            className="w-full"
-            placeholder="*********"
-            name="password"
-            value={formData.password}
-            onChange={onChangeHandler}
-            error={error?.password ? error?.password[0] : undefined}
-          />
-        </div>
-      )}
       <div className="mt-3">
-        <label>Active Status *</label>
+        <FormLabel htmlFor="contact-number">Contact Number</FormLabel>
+        <FormInput
+          id="contact-number"
+          type="text"
+          className="w-full"
+          placeholder="998562395"
+          name="contact_no"
+          value={formData.contact_no}
+          onChange={onChangeHandler}
+          error={error?.contact_no ? error?.contact_no[0] : undefined}
+        />
+      </div>
+      <div className="mt-3">
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <FormInput
+          id="password"
+          type="password"
+          className="w-full"
+          placeholder="*********"
+          name="password"
+          value={formData.password}
+          onChange={onChangeHandler}
+          error={error?.password ? error?.password[0] : undefined}
+        />
+      </div>
+      <div className="mt-3">
+        <label>Active Status</label>
         <FormSelect
           className="mt-2 sm:mr-2"
           name="status"
@@ -196,4 +157,4 @@ const AddOrEditCompany = ({
   );
 };
 
-export default AddOrEditCompany;
+export default AddOrEditStore;

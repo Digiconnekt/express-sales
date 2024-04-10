@@ -3,7 +3,7 @@ import useAxios from "..";
 import toast from "react-hot-toast";
 import useAuthHeader from "../authHeader";
 
-const useCreateCompany = () => {
+const useCreateStore = () => {
   const axiosInstance = useAxios();
   const headers = useAuthHeader();
 
@@ -11,34 +11,34 @@ const useCreateCompany = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const createCompanyReq = async (payload) => {
+  const createStoreReq = async (payload) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post(`/companies`, payload, headers);
+      const res = await axiosInstance.post(`/stores`, payload, headers);
 
-      console.log("create company res", res);
+      console.log("create store res", res);
 
       if (res.data.status) {
         setData(res?.data);
-        toast.success(res?.data?.msg || "company created successfully");
+        toast.success(res?.data?.msg || "store created successfully");
       } else {
         setError(res?.data?.error_msg);
         toast.error(
           typeof res?.data?.error_msg === "string"
             ? res?.data?.error_msg
-            : "Failed to create company"
+            : "Failed to create store"
         );
       }
     } catch (error) {
       setError(error?.response?.data);
-      toast.error(error.response.data.message || "Failed to create company");
-      console.log("create company error", error);
+      toast.error(error.response.data.message || "Failed to create store");
+      console.log("create store error", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { isLoading, data, error, createCompanyReq };
+  return { isLoading, data, error, createStoreReq };
 };
 
-export default useCreateCompany;
+export default useCreateStore;
