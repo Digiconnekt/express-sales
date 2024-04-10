@@ -17,14 +17,14 @@ const useLogout = () => {
   const logoutReq = async () => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.get("/logout");
+      // const res = await axiosInstance.get("/logout");
 
-      if (res) {
-        setData(res?.data);
-        console.log("Logout success");
-        dispatch(logout());
-        navigate("/login");
-      }
+      // if (res) {
+      // setData(res?.data);
+      console.log("Logout success");
+      dispatch(logout());
+      navigate("/login");
+      // }
     } catch (error) {
       setError(error?.response?.data);
       toast.error(error?.response?.data?.message || "Failed to Logout");
