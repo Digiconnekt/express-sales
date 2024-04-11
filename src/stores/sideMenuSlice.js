@@ -7,6 +7,11 @@ const initialState = {
       pathname: "/",
       title: "Dashboard",
     },
+    {
+      icon: "Wifi",
+      pathname: "/nfc",
+      title: "NFC",
+    },
   ],
 };
 

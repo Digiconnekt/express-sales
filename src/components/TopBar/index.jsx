@@ -25,7 +25,7 @@ function Main() {
       <div className="h-[67px] z-[51] flex items-center relative border-b border-slate-200">
         {/* BEGIN: Breadcrumb */}
         <Breadcrumb className="hidden mr-auto -intro-x sm:flex">
-          <Breadcrumb.Link to="/">Application</Breadcrumb.Link>
+          <Breadcrumb.Link to="/">Express Sales</Breadcrumb.Link>
           <Breadcrumb.Link to="/" active={true}>
             Dashboard
           </Breadcrumb.Link>
@@ -33,7 +33,7 @@ function Main() {
         {/* END: Breadcrumb */}
 
         {/* BEGIN: Calender */}
-        <div className="relative text-slate-500 me-5">
+        {/* <div className="relative text-slate-500 me-5">
           <Lucide
             icon="Calendar"
             className="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3"
@@ -56,7 +56,7 @@ function Main() {
             }}
             className="pl-10 sm:w-56 !box"
           />
-        </div>
+        </div> */}
         {/* END: Calender */}
 
         {/* BEGIN: Notifications */}

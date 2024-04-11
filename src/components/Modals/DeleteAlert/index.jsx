@@ -1,6 +1,7 @@
 import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Lucide from "../../../base-components/Lucide";
+import LoadingIcon from "../../../base-components/LoadingIcon";
 
 export default function DeleteAlert({
   selectedId,
@@ -12,6 +13,7 @@ export default function DeleteAlert({
   deleteReq,
   reFetch,
   data,
+  isLoading,
 }) {
   const cancelButtonRef = useRef(null);
 
@@ -92,10 +94,20 @@ export default function DeleteAlert({
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    className={`inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto ${
+                      isLoading && "cursor-not-allowed"
+                    }`}
                     onClick={deleteHandler}
+                    disabled={isLoading}
                   >
                     Delete
+                    {isLoading && (
+                      <LoadingIcon
+                        icon="oval"
+                        color="white"
+                        className="w-4 h-4 ml-2"
+                      />
+                    )}
                   </button>
                   <button
                     type="button"

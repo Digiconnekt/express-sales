@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useAxios from "..";
 import toast from "react-hot-toast";
 import useAuthHeader from "../authHeader";
@@ -11,7 +11,7 @@ const useAllStores = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const allStoresReq = async () => {
+  const allStoresReq = useCallback(async () => {
     try {
       setIsLoading(true);
       const res = await axiosInstance.get("/stores", headers);
@@ -24,9 +24,13 @@ const useAllStores = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [axiosInstance, headers]);
 
-  return { isLoading, data, error, allStoresReq };
+  const reFetch = useCallback(async () => {
+    await allStoresReq();
+  }, [allStoresReq]);
+
+  return { isLoading, data, error, allStoresReq, reFetch };
 };
 
 export default useAllStores;

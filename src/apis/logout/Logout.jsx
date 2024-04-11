@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../stores/authSlice";
+import { removeCompanyId } from "../../stores/companySlice";
 import { useNavigate } from "react-router-dom";
 import useAxios from "..";
 import toast from "react-hot-toast";
@@ -23,6 +24,7 @@ const useLogout = () => {
       // setData(res?.data);
       // console.log("Logout success res", res);
       dispatch(logout());
+      dispatch(removeCompanyId());
       navigate("/login");
       // }
     } catch (error) {
