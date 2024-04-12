@@ -169,20 +169,20 @@ const index = () => {
                                   to={`#`}
                                   className="font-medium whitespace-nowrap"
                                 >
-                                  {nfc?.nfcId ? nfc?.nfcId : "NA"}
+                                  {nfc?.nfcId ? nfc?.nfcId : "-"}
                                 </Link>
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.companyName ? nfc?.companyName : "NA"}
+                                {nfc?.companyName ? nfc?.companyName : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.storeName ? nfc?.storeName : "NA"}
+                                {nfc?.storeName ? nfc?.storeName : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.barcode ? nfc?.barcode : "NA"}
+                                {nfc?.barcode ? nfc?.barcode : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.lastUpdatedAt ? nfc?.lastUpdatedAt : "NA"}
+                                {nfc?.lastUpdatedAt ? nfc?.lastUpdatedAt : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
                                 <div className="flex items-center justify-center">

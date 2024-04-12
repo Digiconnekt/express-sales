@@ -408,31 +408,31 @@ const AdminDashboard = () => {
                                     to={`/company`}
                                     className="font-medium whitespace-nowrap"
                                   >
-                                    {company?.name ? company?.name : "NA"}
+                                    {company?.name ? company?.name : "-"}
                                   </Link>
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                   {company?.company_email
                                     ? company?.company_email
-                                    : "NA"}
+                                    : "-"}
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                   {company?.contact_email
                                     ? company?.contact_email
-                                    : "NA"}
+                                    : "-"}
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                   {company?.contact_number
                                     ? company?.contact_number
-                                    : "NA"}
+                                    : "-"}
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                   {company?.gst_number
                                     ? company?.gst_number
-                                    : "NA"}
+                                    : "-"}
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                  {company?.location ? company?.location : "NA"}
+                                  {company?.location ? company?.location : "-"}
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                   <div
@@ -446,7 +446,7 @@ const AdminDashboard = () => {
                                       ? "Active"
                                       : company?.status === 2
                                       ? "Inactive"
-                                      : "NA"}
+                                      : "-"}
                                   </div>
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
@@ -644,7 +644,7 @@ const AdminDashboard = () => {
                                       ? "Active"
                                       : store.status === 2
                                       ? "Inactive"
-                                      : "NA"}
+                                      : "-"}
                                   </div>
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400 text-center">
@@ -833,7 +833,7 @@ const AdminDashboard = () => {
                                       ? "Active"
                                       : store.status === 2
                                       ? "Inactive"
-                                      : "NA"}
+                                      : "-"}
                                   </div>
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400 text-center">
@@ -1029,7 +1029,7 @@ const AdminDashboard = () => {
                                       ? "Active"
                                       : store.status === 2
                                       ? "Inactive"
-                                      : "NA"}
+                                      : "-"}
                                   </div>
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400 text-center">
@@ -1228,7 +1228,7 @@ const AdminDashboard = () => {
                                       ? "Active"
                                       : store.status === 2
                                       ? "Inactive"
-                                      : "NA"}
+                                      : "-"}
                                   </div>
                                 </Table.Td>
                                 <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400 text-center">

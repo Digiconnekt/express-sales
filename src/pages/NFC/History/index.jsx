@@ -147,19 +147,19 @@ const index = () => {
                                   to={`#`}
                                   className="font-medium whitespace-nowrap"
                                 >
-                                  {nfc?.barcode ? nfc?.barcode : "NA"}
+                                  {nfc?.barcode ? nfc?.barcode : "-"}
                                 </Link>
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.employeeName ? nfc?.employeeName : "NA"}
+                                {nfc?.employeeName ? nfc?.employeeName : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                 {nfc?.productDescription
                                   ? nfc?.productDescription
-                                  : "NA"}
+                                  : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.lastUpdatedAt ? nfc?.lastUpdatedAt : "NA"}
+                                {nfc?.lastUpdatedAt ? nfc?.lastUpdatedAt : "-"}
                               </Table.Td>
                             </Table.Tr>
                           ))}
