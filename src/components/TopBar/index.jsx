@@ -4,7 +4,7 @@ import { Menu, Popover } from "../../base-components/Headless";
 import fakerData from "../../utils/faker";
 import _ from "lodash";
 import clsx from "clsx";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import Litepicker from "../../base-components/Litepicker";
 import { useState } from "react";
 import useLogout from "../../apis/logout/Logout";
@@ -14,6 +14,7 @@ import LoadingIcon from "../../base-components/LoadingIcon";
 
 function Main() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const user = useSelector((state) => state.auth.user);
   const { data, error, isLoading, logoutReq } = useLogout();
@@ -24,12 +25,20 @@ function Main() {
       {/* BEGIN: Top Bar */}
       <div className="h-[67px] z-[51] flex items-center relative border-b border-slate-200">
         {/* BEGIN: Breadcrumb */}
-        <Breadcrumb className="hidden mr-auto -intro-x sm:flex">
-          <Breadcrumb.Link to="/">Express Sales</Breadcrumb.Link>
-          <Breadcrumb.Link to="/" active={true}>
+        {location.pathname === "/" ? (
+          <div className="hidden mr-auto -intro-x sm:flex text-primary">
             Dashboard
-          </Breadcrumb.Link>
-        </Breadcrumb>
+          </div>
+        ) : (
+          <div
+            className="hidden mr-auto -intro-x sm:flex cursor-pointer hover:text-primary"
+            onClick={() => navigate(-1)}
+          >
+            <Lucide icon="ChevronLeft" className="w-5 h-5 me-1" />
+            Go Back
+          </div>
+        )}
+
         {/* END: Breadcrumb */}
 
         {/* BEGIN: Calender */}
