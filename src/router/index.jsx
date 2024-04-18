@@ -1,16 +1,18 @@
 import { useRoutes } from "react-router-dom";
 import SideMenu from "../layouts/SideMenu";
-import AdminDashboard from "../pages/AdminDashboard";
-import Nfc from "../pages/NFC";
-import NfcHistory from "../pages/NFC/History";
-import CompanyDashboard from "../pages/CompanyDashboard";
 import StoreDashboard from "../pages/StoreDashboard";
+
+import Admin from "../pages/Admin";
+import Company from "../pages/Company";
+import Nfc from "../pages/NFC";
 import Login from "../pages/Login";
-import ErrorPage from "../pages/ErrorPage";
+import NfcHistory from "../pages/NFC/History";
 
 import CompanyCreate from "../pages/Company/Create";
 import StoreCreate from "../pages/Store/Create";
 import EmployeeCreate from "../pages/Employee/Create";
+
+import ErrorPage from "../pages/ErrorPage";
 
 function Router() {
   const routes = [
@@ -20,7 +22,15 @@ function Router() {
       children: [
         {
           path: "/",
-          element: <AdminDashboard />,
+          element: <Admin />,
+        },
+        {
+          path: "/company",
+          element: <Company />,
+        },
+        {
+          path: "/store",
+          element: <StoreDashboard />,
         },
         {
           path: "/nfc",
@@ -31,16 +41,8 @@ function Router() {
           element: <NfcHistory />,
         },
         {
-          path: "/company",
-          element: <CompanyDashboard />,
-        },
-        {
           path: "/company/create",
           element: <CompanyCreate />,
-        },
-        {
-          path: "/store",
-          element: <StoreDashboard />,
         },
         {
           path: "/store/create",

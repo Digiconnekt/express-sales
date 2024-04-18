@@ -1,39 +1,29 @@
 import _ from "lodash";
-import clsx from "clsx";
+import moment from "moment";
 import Lucide from "../../base-components/Lucide";
 import Table from "../../base-components/Table";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "../../base-components/Button";
-import { FormInput, FormLabel } from "../../base-components/Form";
+import { FormInput } from "../../base-components/Form";
 import Litepicker from "../../base-components/Litepicker";
+import useAllNfcs from "../../apis/nfc/Nfcs";
 
 const index = () => {
-  const isLoading = false;
-
   const navigate = useNavigate();
+
+  const {
+    allNfcsReq,
+    data: dataAllNfcs,
+    isLoading: isLoadingAllNfcs,
+    reFetch: reFetchAllNfcs,
+  } = useAllNfcs();
 
   const [salesReportFilter, setSalesReportFilter] = useState();
 
-  const dataAllNfc = {
-    data: [
-      {
-        nfcId: 1,
-        storeName: "store name",
-        companyName: "company name",
-        barcode: "32322332",
-        lastUpdatedAt: "12/04/2024",
-      },
-      {
-        nfcId: 2,
-        storeName: "store name",
-        companyName: "company name",
-        barcode: "32322332",
-        lastUpdatedAt: "12/04/2024",
-      },
-    ],
-  };
+  useEffect(() => {
+    allNfcsReq();
+  }, []);
 
   return (
     <>
@@ -45,34 +35,29 @@ const index = () => {
                 <div className="w-56 text-slate-500">
                   <h2 className="text-lg font-semibold">
                     Total NFCs -{" "}
-                    {isLoading ? <>loading...</> : dataAllNfc?.data?.length}
+                    {isLoadingAllNfcs ? (
+                      <>loading...</>
+                    ) : (
+                      dataAllNfcs?.data?.length
+                    )}
                   </h2>
                 </div>
-                {/* <div className="w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
-                  <Button
-                    variant="primary"
-                    className="mr-2 shadow-md"
-                    onClick={() => navigate("/company/create")}
-                  >
-                    Add New Company
-                  </Button>
-                </div> */}
               </div>
 
               <div className="bg-white mt-5 p-3 rounded-md">
                 <div className="grid grid-cols-12 items-center gap-5">
                   <div className="col-span-3">
                     <FormInput
-                      id="company-name"
+                      id="company-id"
                       type="text"
-                      placeholder="Company Name"
+                      placeholder="Company ID"
                     />
                   </div>
                   <div className="col-span-3">
                     <FormInput
-                      id="store-name"
+                      id="store-id"
                       type="text"
-                      placeholder="Store Name"
+                      placeholder="Store ID"
                     />
                   </div>
                   <div className="col-span-3">
@@ -127,7 +112,7 @@ const index = () => {
                 </div>
               </div>
 
-              {isLoading ? (
+              {isLoadingAllNfcs ? (
                 <p className="text-center mt-5 bg-white p-5 text-md">
                   loading...
                 </p>
@@ -136,7 +121,7 @@ const index = () => {
                   className="mt-8 overflow-auto intro-y lg:overflow-visible sm:mt-0"
                   style={{ overflowX: "auto" }}
                 >
-                  {dataAllNfc?.data?.length > 0 && (
+                  {dataAllNfcs?.data?.length > 0 && (
                     <div className="overflow-x-auto">
                       <Table className="border-spacing-y-[10px] border-separate sm:mt-2">
                         <Table.Thead>
@@ -145,10 +130,10 @@ const index = () => {
                               NFC ID
                             </Table.Th>
                             <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                              COMPANY NAME
+                              COMPANY ID
                             </Table.Th>
                             <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                              STORE NAME
+                              STORE ID
                             </Table.Th>
                             <Table.Th className="text-center border-b-0 whitespace-nowrap">
                               BARCODE
@@ -162,34 +147,36 @@ const index = () => {
                           </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody>
-                          {dataAllNfc?.data?.map((nfc, i) => (
+                          {dataAllNfcs?.data?.map((nfc, i) => (
                             <Table.Tr key={i} className="intro-x">
                               <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                 <Link
                                   to={`#`}
                                   className="font-medium whitespace-nowrap"
                                 >
-                                  {nfc?.nfcId ? nfc?.nfcId : "-"}
+                                  {nfc?.id ? nfc?.id : "-"}
                                 </Link>
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.companyName ? nfc?.companyName : "-"}
+                                {nfc?.company_id ? nfc?.company_id : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.storeName ? nfc?.storeName : "-"}
+                                {nfc?.store_id ? nfc?.store_id : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                                 {nfc?.barcode ? nfc?.barcode : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                                {nfc?.lastUpdatedAt ? nfc?.lastUpdatedAt : "-"}
+                                {nfc.updated_at
+                                  ? moment(nfc.updated_at).format("MM/DD/YYYY")
+                                  : "-"}
                               </Table.Td>
                               <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
                                 <div className="flex items-center justify-center">
                                   <div
                                     className="flex items-center mr-3 cursor-pointer"
                                     onClick={() =>
-                                      navigate(`/nfc/history/${nfc?.nfcId}`)
+                                      navigate(`/nfc/history/${nfc?.id}`)
                                     }
                                   >
                                     <Lucide
@@ -207,7 +194,7 @@ const index = () => {
                     </div>
                   )}
 
-                  {dataAllNfc?.data?.length === 0 && (
+                  {dataAllNfcs?.data?.length === 0 && (
                     <p className="text-center mt-5 bg-white p-5 text-md">
                       No NFC Found
                     </p>
