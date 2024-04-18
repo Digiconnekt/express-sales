@@ -7,6 +7,7 @@ import Company from "../pages/Company";
 import Nfc from "../pages/NFC";
 import Login from "../pages/Login";
 import NfcHistory from "../pages/NFC/History";
+import SendNotification from "../pages/Notification/SendNotification";
 
 import CompanyCreate from "../pages/Company/Create";
 import StoreCreate from "../pages/Store/Create";
@@ -51,6 +52,10 @@ function Router() {
         {
           path: "/employee/create",
           element: <EmployeeCreate />,
+        },
+        {
+          path: "/notification",
+          element: <SendNotification />,
         },
       ],
     },

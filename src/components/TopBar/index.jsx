@@ -25,19 +25,9 @@ function Main() {
       {/* BEGIN: Top Bar */}
       <div className="h-[67px] z-[51] flex items-center relative border-b border-slate-200">
         {/* BEGIN: Breadcrumb */}
-        {location.pathname === "/" ? (
-          <div className="hidden mr-auto -intro-x sm:flex text-primary">
-            Dashboard
-          </div>
-        ) : (
-          <div
-            className="hidden mr-auto -intro-x sm:flex cursor-pointer hover:text-primary"
-            onClick={() => navigate(-1)}
-          >
-            <Lucide icon="ChevronLeft" className="w-5 h-5 me-1" />
-            Go Back
-          </div>
-        )}
+        <div className="hidden mr-auto -intro-x sm:flex text-primary">
+          Dashboard
+        </div>
 
         {/* END: Breadcrumb */}
 
@@ -69,7 +59,7 @@ function Main() {
         {/* END: Calender */}
 
         {/* BEGIN: Notifications */}
-        <Popover className="mr-auto intro-x sm:mr-6">
+        {/* <Popover className="mr-auto intro-x sm:mr-6">
           <Popover.Button
             className="
               relative text-slate-600 outline-none block
@@ -80,7 +70,7 @@ function Main() {
           </Popover.Button>
           <Popover.Panel className="w-[280px] sm:w-[350px] p-5 mt-2">
             <div className="mb-5 font-medium">Notifications</div>
-            {/* {_.take(fakerData, 5).map((faker, fakerKey) => (
+            {_.take(fakerData, 5).map((faker, fakerKey) => (
               <div
                 key={fakerKey}
                 className={clsx([
@@ -110,9 +100,9 @@ function Main() {
                   </div>
                 </div>
               </div>
-            ))} */}
+            ))}
           </Popover.Panel>
-        </Popover>
+        </Popover> */}
         {/* END: Notifications  */}
 
         {/* BEGIN: Account Menu */}

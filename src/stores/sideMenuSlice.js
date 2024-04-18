@@ -12,6 +12,11 @@ const initialState = {
       pathname: "/nfc",
       title: "NFC",
     },
+    {
+      icon: "Bell",
+      pathname: "/notification",
+      title: "Send Notification",
+    },
   ],
 };
 
