@@ -11,26 +11,35 @@ const useAllCompanies = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const allCompaniesReq = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const res = await axiosInstance.get("/companies", headers);
-      setData(res?.data);
-      // console.log("all companies res", res);
-    } catch (error) {
-      setError(error?.response?.data);
-      toast.error(
-        error.response.data.message || "Failed to fetch all companies"
-      );
-      // console.log("all companies error", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [axiosInstance, headers]);
+  const allCompaniesReq = useCallback(
+    async (query) => {
+      try {
+        setIsLoading(true);
+        const res = await axiosInstance.get(
+          `/companies${query ? `?${query}` : ""}`,
+          headers
+        );
+        setData(res?.data);
+        // console.log("all companies res", res);
+      } catch (error) {
+        setError(error?.response?.data);
+        toast.error(
+          error.response.data.message || "Failed to fetch all companies"
+        );
+        // console.log("all companies error", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [axiosInstance, headers]
+  );
 
-  const reFetch = useCallback(async () => {
-    await allCompaniesReq();
-  }, [allCompaniesReq]);
+  const reFetch = useCallback(
+    async (query) => {
+      await allCompaniesReq(query);
+    },
+    [allCompaniesReq]
+  );
 
   return { isLoading, data, error, allCompaniesReq, reFetch };
 };

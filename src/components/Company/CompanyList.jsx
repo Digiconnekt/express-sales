@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import moment from "moment";
 import EditModal from "../Modals/Edit";
 import { useEffect, useState } from "react";
 import Table from "../../base-components/Table";
@@ -7,15 +8,15 @@ import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
 import AddOrEditCompany from "./AddOrEditCompany";
 import Litepicker from "../../base-components/Litepicker";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { FormInput, FormLabel } from "../../base-components/Form";
+import { Link, useNavigate } from "react-router-dom";
+import { FormInput } from "../../base-components/Form";
 
 import useAllCompanies from "../../apis/company/Companies";
 import useDeleteCompany from "../../apis/company/Delete";
 import useShowCompany from "../../apis/company/Show";
 import useUpdateCompany from "../../apis/company/Update";
 
-const CompanyList = () => {
+const CompanyList = ({ reFetchCard }) => {
   const navigate = useNavigate();
 
   const {
@@ -48,6 +49,19 @@ const CompanyList = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [salesReportFilter, setSalesReportFilter] = useState();
+  const [filterData, setFilterData] = useState({
+    name: "",
+    company_email: "",
+    location: "",
+  });
+
+  const onChangeFilterHandler = (e) => {
+    const { name, value } = e.target;
+    setFilterData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   useEffect(() => {
     allCompaniesReq();
@@ -61,6 +75,26 @@ const CompanyList = () => {
   const editModalHandler = (id) => {
     setShowEditModal(true);
     setSelectedId(id);
+  };
+
+  const filterHandler = () => {
+    reFetchAllCompanies(
+      `name=${filterData.name}&company_email=${filterData.company_email}&location=${filterData.location}`
+    );
+  };
+
+  const resetFilterHandler = () => {
+    reFetchAllCompanies();
+    setFilterData({
+      name: "",
+      company_email: "",
+      location: "",
+    });
+  };
+
+  const reFetch = () => {
+    reFetchAllCompanies();
+    reFetchCard();
   };
 
   return (
@@ -95,6 +129,9 @@ const CompanyList = () => {
                 id="company-name"
                 type="text"
                 placeholder="Company Name"
+                name="name"
+                value={filterData.name}
+                onChange={onChangeFilterHandler}
               />
             </div>
             <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
@@ -102,10 +139,20 @@ const CompanyList = () => {
                 id="company-email"
                 type="text"
                 placeholder="Company Email"
+                name="company_email"
+                value={filterData.company_email}
+                onChange={onChangeFilterHandler}
               />
             </div>
             <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
-              <FormInput id="location" type="text" placeholder="Location" />
+              <FormInput
+                id="location"
+                type="text"
+                placeholder="Location"
+                name="location"
+                value={filterData.location}
+                onChange={onChangeFilterHandler}
+              />
             </div>
             <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
               <div className="relative text-slate-500">
@@ -139,7 +186,7 @@ const CompanyList = () => {
                 variant="primary"
                 type="button"
                 className="w-full "
-                // onClick={onFilter}
+                onClick={filterHandler}
               >
                 Filter
               </Button>
@@ -150,7 +197,7 @@ const CompanyList = () => {
                 variant="secondary"
                 type="button"
                 className="w-full"
-                // onClick={onResetFilter}
+                onClick={resetFilterHandler}
               >
                 Reset
               </Button>
@@ -190,6 +237,9 @@ const CompanyList = () => {
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         STATUS
+                      </Table.Th>
+                      <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                        CREATED AT
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         ACTIONS
@@ -243,6 +293,11 @@ const CompanyList = () => {
                               : "-"}
                           </div>
                         </Table.Td>
+                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                          {company.created_at
+                            ? moment(company.created_at).format("MM/DD/YYYY")
+                            : "-"}
+                        </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">
                           <div className="flex items-center justify-center">
                             <div
@@ -287,7 +342,7 @@ const CompanyList = () => {
         setOpen={setShowDeleteAlert}
         data={dataDeleteCompany}
         deleteReq={deleteCompanyReq}
-        reFetch={reFetchAllCompanies}
+        reFetch={reFetch}
         isLoading={isLoadingDeleteCompany}
         title={"Delete Company"}
         subTitle={

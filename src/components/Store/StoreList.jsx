@@ -1,14 +1,16 @@
 import clsx from "clsx";
+import moment from "moment";
 import EditModal from "../Modals/Edit";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import AddOrEditStore from "./AddOrEditStore";
 import Table from "../../base-components/Table";
 import DeleteAlert from "../Modals/DeleteAlert";
 import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
-import AddOrEditStore from "./AddOrEditStore";
 import Litepicker from "../../base-components/Litepicker";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { FormInput, FormLabel } from "../../base-components/Form";
+import { Link, useNavigate } from "react-router-dom";
+import { FormInput } from "../../base-components/Form";
 
 import useAllStores from "../../apis/store/Stores";
 import useDeleteStore from "../../apis/store/Delete";
@@ -16,6 +18,7 @@ import useShowStore from "../../apis/store/Show";
 import useUpdateStore from "../../apis/store/Update";
 
 const StoreList = () => {
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   const {
@@ -48,6 +51,21 @@ const StoreList = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [salesReportFilter, setSalesReportFilter] = useState();
+  const [filterData, setFilterData] = useState({
+    name: "",
+    company_id: "",
+    email: "",
+    location: "",
+    contact_no: "",
+  });
+
+  const onChangeFilterHandler = (e) => {
+    const { name, value } = e.target;
+    setFilterData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   useEffect(() => {
     allStoresReq();
@@ -63,6 +81,27 @@ const StoreList = () => {
     setSelectedId(id);
   };
 
+  const filterHandler = () => {
+    reFetchAllStores(
+      `name=${filterData.name}&company_id=${filterData.company_id}&location=${filterData.location}&email=${filterData.email}`
+    );
+  };
+
+  const resetFilterHandler = () => {
+    reFetchAllStores();
+    setFilterData({
+      name: "",
+      company_id: "",
+      email: "",
+      location: "",
+    });
+  };
+
+  const reFetch = () => {
+    reFetchAllStores();
+    reFetchCard();
+  };
+
   return (
     <>
       <div className="col-span-12 mt-6">
@@ -72,18 +111,59 @@ const StoreList = () => {
               Total Stores - {dataAllStores?.data?.length}
             </h2>
           </div>
+          {user.role === "company_manager" && (
+            <div className="w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
+              <Button
+                variant="primary"
+                className="mr-2 shadow-md"
+                onClick={() => navigate("/store/create")}
+              >
+                Add New Store
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="bg-white mt-5 p-3 rounded-md">
           <div className="grid grid-cols-12 items-center gap-5">
             <div className="col-span-3">
-              <FormInput id="store-name" type="text" placeholder="Store Name" />
+              <FormInput
+                id="store-name"
+                type="text"
+                placeholder="Store Name"
+                name="name"
+                value={filterData.name}
+                onChange={onChangeFilterHandler}
+              />
             </div>
             <div className="col-span-3">
               <FormInput
-                id="company-name"
+                id="company-id"
                 type="text"
-                placeholder="Company Name"
+                placeholder="Company Id"
+                name="company_id"
+                value={filterData.company_id}
+                onChange={onChangeFilterHandler}
+              />
+            </div>
+            <div className="col-span-3">
+              <FormInput
+                id="email"
+                type="email"
+                placeholder="Store Email"
+                name="email"
+                value={filterData.email}
+                onChange={onChangeFilterHandler}
+              />
+            </div>
+            <div className="col-span-3">
+              <FormInput
+                id="location"
+                type="text"
+                placeholder="Location"
+                name="location"
+                value={filterData.location}
+                onChange={onChangeFilterHandler}
               />
             </div>
             <div className="col-span-3">
@@ -118,8 +198,9 @@ const StoreList = () => {
                 variant="primary"
                 type="button"
                 className="w-full "
+                onClick={filterHandler}
               >
-                Go
+                Filter
               </Button>
             </div>
             <div className="col-span-1">
@@ -128,6 +209,7 @@ const StoreList = () => {
                 variant="secondary"
                 type="button"
                 className="w-full"
+                onClick={resetFilterHandler}
               >
                 Reset
               </Button>
@@ -150,6 +232,9 @@ const StoreList = () => {
                       <Table.Th className="border-b-0 whitespace-nowrap">
                         STORE NAME
                       </Table.Th>
+                      <Table.Th className="border-b-0 whitespace-nowrap">
+                        COMPANY ID
+                      </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         EMAIL
                       </Table.Th>
@@ -163,8 +248,13 @@ const StoreList = () => {
                         STATUS
                       </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
-                        ACTIONS
+                        CREATED AT
                       </Table.Th>
+                      {user.role === "company_manager" && (
+                        <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                          ACTIONS
+                        </Table.Th>
+                      )}
                     </Table.Tr>
                   </Table.Thead>
                   <Table.Tbody>
@@ -175,17 +265,20 @@ const StoreList = () => {
                             to={`/store`}
                             className="font-medium whitespace-nowrap"
                           >
-                            {store.store_title || "NA"}
+                            {store.store_title || "-"}
                           </Link>
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {store.email_id || "NA"}
+                          {store.company_id || "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {store.contact_no || "NA"}
+                          {store.email_id || "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {store.store_location || "NA"}
+                          {store.contact_no || "-"}
+                        </Table.Td>
+                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                          {store.store_location || "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           <div
@@ -202,27 +295,37 @@ const StoreList = () => {
                               : "-"}
                           </div>
                         </Table.Td>
-                        <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400 text-center">
-                          <div className="flex items-center justify-center">
-                            <div
-                              className="flex items-center mr-3 cursor-pointer"
-                              onClick={() => editModalHandler(store?.id)}
-                            >
-                              <Lucide
-                                icon="CheckSquare"
-                                className="w-4 h-4 mr-1"
-                              />
-                              Edit
-                            </div>
-                            <div
-                              className="flex items-center text-danger cursor-pointer"
-                              onClick={() => deleteHandler(store?.id)}
-                            >
-                              <Lucide icon="Trash2" className="w-4 h-4 mr-1" />
-                              Delete
-                            </div>
-                          </div>
+                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                          {store.created_at
+                            ? moment(store.created_at).format("MM/DD/YYYY")
+                            : "-"}
                         </Table.Td>
+                        {user.role === "company_manager" && (
+                          <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400 text-center">
+                            <div className="flex items-center justify-center">
+                              <div
+                                className="flex items-center mr-3 cursor-pointer"
+                                onClick={() => editModalHandler(store?.id)}
+                              >
+                                <Lucide
+                                  icon="CheckSquare"
+                                  className="w-4 h-4 mr-1"
+                                />
+                                Edit
+                              </div>
+                              <div
+                                className="flex items-center text-danger cursor-pointer"
+                                onClick={() => deleteHandler(store?.id)}
+                              >
+                                <Lucide
+                                  icon="Trash2"
+                                  className="w-4 h-4 mr-1"
+                                />
+                                Delete
+                              </div>
+                            </div>
+                          </Table.Td>
+                        )}
                       </Table.Tr>
                     ))}
                   </Table.Tbody>
@@ -246,11 +349,11 @@ const StoreList = () => {
         setOpen={setShowDeleteAlert}
         data={dataDeleteStore}
         deleteReq={deleteStoreReq}
-        reFetch={reFetchAllStores}
+        reFetch={reFetch}
         isLoading={isLoadingDeleteStore}
-        title={"Delete Company"}
+        title={"Delete Store"}
         subTitle={
-          "Are you sure that you want to delete this company? All of your data will be permanently removed. This action cannot be undone."
+          "Are you sure that you want to delete this Store? All of your data will be permanently removed. This action cannot be undone."
         }
       />
 

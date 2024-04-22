@@ -1,37 +1,67 @@
 import _ from "lodash";
 import CompanyDashboard from "../../dashboards/CompanyDashboard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../../components/Card";
 
 import StoreList from "../../components/Store/StoreList";
 import OrderList from "../../components/Order/OrderList";
 import RevenueList from "../../components/Revenue/RevenueList";
 import CustomerList from "../../components/Customer/CustomerList";
+import useCard from "../../apis/DashboardTopCards/card";
 
 const index = () => {
+  const {
+    cardReq,
+    data: dataCard,
+    isLoading: isLoadingCard,
+    reFetch: reFetchCard,
+  } = useCard();
+
+  const [cardType, setCardType] = useState("store");
+  const [storeCount, setStoreCount] = useState(0);
+  const [revenueCount, setRevenueCount] = useState(0);
+  const [orderCount, setOrderCount] = useState(0);
+  const [customerCount, setCustomerCount] = useState(0);
+
   const cardsData = [
     {
       title: "Stores",
       icon: "CreditCard",
       cardType: "store",
+      count: storeCount,
     },
     {
       title: "Revenue",
       icon: "CreditCard",
       cardType: "revenue",
+      count: revenueCount,
     },
     {
       title: "Orders",
       icon: "ShoppingCart",
       cardType: "order",
+      count: orderCount,
     },
     {
       title: "Customers",
       icon: "User",
       cardType: "customer",
+      count: customerCount,
     },
   ];
-  const [cardType, setCardType] = useState("store");
+
+  useEffect(() => {
+    cardReq();
+  }, []);
+
+  useEffect(() => {
+    if (dataCard) {
+      setStoreCount(dataCard?.data?.stores);
+      setRevenueCount(dataCard?.data?.revenue);
+      setOrderCount(dataCard?.data?.orders);
+      setCustomerCount(dataCard?.data?.customers);
+    }
+  }, [dataCard]);
 
   return (
     <CompanyDashboard>
@@ -45,13 +75,14 @@ const index = () => {
                   cards={cardsData}
                   cardType={cardType}
                   setCardType={setCardType}
+                  isLoading={isLoadingCard}
                 />
               </div>
             </div>
             {/* END: General Report */}
 
             {/* START: Stores Table */}
-            {cardType === "store" && <StoreList />}
+            {cardType === "store" && <StoreList reFetchCard={reFetchCard} />}
             {/* END: Stores Table */}
 
             {/* START: Revenue Table */}

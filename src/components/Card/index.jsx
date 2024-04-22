@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Lucide from "../../base-components/Lucide";
 
-const index = ({ cards, cardType, setCardType }) => {
+const index = ({ cards, cardType, setCardType, isLoading }) => {
   return (
     <>
       {cards.map((card, i) => (
@@ -27,12 +27,13 @@ const index = ({ cards, cardType, setCardType }) => {
                 <Lucide icon={card.icon} className="w-[28px] h-[28px]" />
               </div>
               <div className="mt-6 text-3xl font-medium leading-8">
-                {/* {isLoadingAllCompanies ? (
-                          <>loading...</>
-                        ) : (
-                          dataAllCompanies?.data?.length
-                        )} */}{" "}
-                000
+                {isLoading ? (
+                  <span className="text-xs">loading...</span>
+                ) : card.cardType === "revenue" ? (
+                  `₹ ${card.count || 0}`
+                ) : (
+                  card.count || 0
+                )}{" "}
               </div>
               <div className="mt-1 text-base">{card.title}</div>
             </div>
