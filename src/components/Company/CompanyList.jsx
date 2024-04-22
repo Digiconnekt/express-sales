@@ -126,9 +126,9 @@ const CompanyList = ({ reFetchCard }) => {
           <div className="grid grid-cols-12 items-center gap-5">
             <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
               <FormInput
-                id="company-name"
+                id="manager-name"
                 type="text"
-                placeholder="Company Name"
+                placeholder="Manager Name"
                 name="name"
                 value={filterData.name}
                 onChange={onChangeFilterHandler}
@@ -220,6 +220,9 @@ const CompanyList = ({ reFetchCard }) => {
                       <Table.Th className="border-b-0 whitespace-nowrap">
                         COMPANY NAME
                       </Table.Th>
+                      <Table.Th className="border-b-0 whitespace-nowrap">
+                        MANAGER NAME
+                      </Table.Th>
                       <Table.Th className="text-center border-b-0 whitespace-nowrap">
                         COMPANY EMAIL
                       </Table.Th>
@@ -254,8 +257,15 @@ const CompanyList = ({ reFetchCard }) => {
                             to={`/company`}
                             className="font-medium whitespace-nowrap"
                           >
-                            {company?.name ? company?.name : "-"}
+                            {company?.company_name
+                              ? company?.company_name
+                              : "-"}
                           </Link>
+                        </Table.Td>
+                        <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                          {company?.companymanager?.name
+                            ? company?.companymanager?.name
+                            : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {company?.company_email
@@ -295,7 +305,7 @@ const CompanyList = ({ reFetchCard }) => {
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {company.created_at
-                            ? moment(company.created_at).format("MM/DD/YYYY")
+                            ? moment(company.created_at).format("DD/MM/YYYY")
                             : "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400">

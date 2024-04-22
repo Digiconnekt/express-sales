@@ -174,7 +174,7 @@ const CustomerList = () => {
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {customer.created_at
-                            ? moment(customer.created_at).format("MM/DD/YYYY")
+                            ? moment(customer.created_at).format("DD/MM/YYYY")
                             : "-"}
                         </Table.Td>
                       </Table.Tr>

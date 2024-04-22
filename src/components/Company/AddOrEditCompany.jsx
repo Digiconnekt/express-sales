@@ -17,6 +17,7 @@ const AddOrEditCompany = ({
 
   const [formData, setFormData] = useState({
     name: "",
+    company_name: "",
     company_email: "",
     contact_email: "",
     contact_number: "",
@@ -31,6 +32,7 @@ const AddOrEditCompany = ({
       setFormData((prevData) => ({
         ...prevData,
         name: inputData?.name || "",
+        company_name: inputData?.company_name || "",
         company_email: inputData?.company_email || "",
         contact_email: inputData?.contact_email || "",
         contact_number: inputData?.contact_number || "",
@@ -64,16 +66,29 @@ const AddOrEditCompany = ({
   return (
     <>
       <div>
-        <FormLabel htmlFor="name">Company Name *</FormLabel>
+        <FormLabel htmlFor="name">Name *</FormLabel>
         <FormInput
           id="name"
           type="text"
           className="w-full"
-          placeholder="Bata"
+          placeholder="John"
           name="name"
           value={formData.name}
           onChange={onChangeHandler}
           error={error?.name ? error?.name[0] : undefined}
+        />
+      </div>
+      <div className="mt-3">
+        <FormLabel htmlFor="company_name">Company Name *</FormLabel>
+        <FormInput
+          id="company_name"
+          type="text"
+          className="w-full"
+          placeholder="Bata"
+          name="company_name"
+          value={formData.company_name}
+          onChange={onChangeHandler}
+          error={error?.company_name ? error?.company_name[0] : undefined}
         />
       </div>
       <div className="mt-3">

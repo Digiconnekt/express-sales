@@ -1,14 +1,12 @@
 import useCreateStore from "../../../apis/store/Create";
 import AddOrEditStore from "../../../components/Store/AddOrEditStore";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { OnlyCompany } from "../../../dashboards/CompanyDashboard";
 
 function Main() {
   const { createStoreReq, data, error, isLoading } = useCreateStore();
 
   return (
-    <>
+    <OnlyCompany>
       <div className="flex items-center mt-8 intro-y">
         <h2 className="mr-auto text-lg font-medium">Create New Store</h2>
       </div>
@@ -25,7 +23,7 @@ function Main() {
           </div>
         </div>
       </div>
-    </>
+    </OnlyCompany>
   );
 }
 

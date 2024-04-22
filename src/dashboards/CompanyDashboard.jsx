@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Admin from "../pages/Admin";
 
 const CompanyDashboard = ({ children }) => {
   const user = useSelector((state) => state.auth.user);
@@ -13,6 +12,16 @@ const CompanyDashboard = ({ children }) => {
   // }
   else {
     return null;
+  }
+};
+
+export const OnlyCompany = ({ children }) => {
+  const user = useSelector((state) => state.auth.user);
+
+  if (user && user.role === "company-manager") {
+    return <>{children}</>;
+  } else {
+    return <Navigate to={`/`} />;
   }
 };
 

@@ -14,15 +14,15 @@ const AddOrEditStore = ({
   inputData,
   setModalOpen,
 }) => {
-  const companyId = useSelector((state) => state.company.id);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   const [formData, setFormData] = useState({
     name: "",
     email_id: "",
     store_location: "",
     contact_no: "",
-    company_id: companyId || "",
+    company_id: user.id || "",
     password: "",
     status: "1",
   });
