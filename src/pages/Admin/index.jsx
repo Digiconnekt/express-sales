@@ -1,14 +1,14 @@
 import _ from "lodash";
-import AdminDashboard from "../../dashboards/AdminDashboard";
-import { useEffect, useState } from "react";
 import Card from "../../components/Card";
+import { useEffect, useState } from "react";
+import AdminDashboard from "../../dashboards/AdminDashboard";
+
+import useCard from "../../apis/DashboardTopCards/card";
 
 import StoreList from "../../components/Store/StoreList";
 import OrderList from "../../components/Order/OrderList";
-import RevenueList from "../../components/Revenue/RevenueList";
 import CompanyList from "../../components/Company/CompanyList";
 import CustomerList from "../../components/Customer/CustomerList";
-import useCard from "../../apis/DashboardTopCards/card";
 
 const index = () => {
   const {
@@ -101,7 +101,7 @@ const index = () => {
             {/* END: Stores Table */}
 
             {/* START: Revenue Table */}
-            {cardType === "revenue" && <RevenueList />}
+            {cardType === "revenue" && <OrderList />}
             {/* END: Revenue Table */}
 
             {/* START: Orders Table */}

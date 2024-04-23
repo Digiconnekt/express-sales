@@ -48,7 +48,9 @@ const CompanyList = ({ reFetchCard }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-  const [salesReportFilter, setSalesReportFilter] = useState();
+  const [dateFilter, setDateFilter] = useState();
+  const [startDateFilter, setStartDateFilter] = useState("");
+  const [endDateFilter, setEndDateFilter] = useState("");
   const [filterData, setFilterData] = useState({
     name: "",
     company_email: "",
@@ -67,6 +69,20 @@ const CompanyList = ({ reFetchCard }) => {
     allCompaniesReq();
   }, []);
 
+  useEffect(() => {
+    if (dateFilter) {
+      const [start, end] = dateFilter.split(" - ");
+
+      const startDate = moment(start, "DD MMM, YYYY");
+      const endDate = moment(end, "DD MMM, YYYY");
+      const formattedStartDate = startDate.format("DD/MM/YYYY");
+      const formattedEndDate = endDate.format("DD/MM/YYYY");
+
+      setStartDateFilter(formattedStartDate);
+      setEndDateFilter(formattedEndDate);
+    }
+  }, [dateFilter]);
+
   const deleteHandler = (id) => {
     setShowDeleteAlert(true);
     setSelectedId(id);
@@ -79,7 +95,7 @@ const CompanyList = ({ reFetchCard }) => {
 
   const filterHandler = () => {
     reFetchAllCompanies(
-      `name=${filterData.name}&company_email=${filterData.company_email}&location=${filterData.location}`
+      `name=${filterData.name}&company_email=${filterData.company_email}&location=${filterData.location}&start_date=${startDateFilter}&end_date=${endDateFilter}`
     );
   };
 
@@ -161,8 +177,8 @@ const CompanyList = ({ reFetchCard }) => {
                   className="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3"
                 />
                 <Litepicker
-                  value={salesReportFilter}
-                  onChange={setSalesReportFilter}
+                  value={dateFilter}
+                  onChange={setDateFilter}
                   options={{
                     autoApply: false,
                     singleMode: false,
