@@ -36,6 +36,10 @@ const useLogin = () => {
         navigate("/");
       } else if (res?.data?.data?.role === "company-manager") {
         navigate(`/company`);
+      } else if (res?.data?.data?.role === "store-manager") {
+        navigate(`/store`);
+      } else {
+        navigate(`/`);
       }
     } catch (error) {
       setError(error?.response?.data);

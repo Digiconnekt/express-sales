@@ -6,6 +6,8 @@ const AdminDashboard = ({ children }) => {
 
   if (user && user.role === "company-manager") {
     return <Navigate to={`/company`} />;
+  } else if (user && user.role === "store-manager") {
+    return <Navigate to={`/store`} />;
   } else {
     return <>{children}</>;
   }

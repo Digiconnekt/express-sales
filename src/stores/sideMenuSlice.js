@@ -9,15 +9,27 @@ const initialState = {
       show: {
         master: true,
         "company-manager": false,
+        "store-manager": false,
       },
     },
     {
       icon: "Home",
       pathname: "/company",
-      title: "Company",
+      title: "Dashboard",
       show: {
-        master: true,
+        master: false,
         "company-manager": true,
+        "store-manager": false,
+      },
+    },
+    {
+      icon: "Home",
+      pathname: "/store",
+      title: "Dashboard",
+      show: {
+        master: false,
+        "company-manager": false,
+        "store-manager": true,
       },
     },
     {
@@ -27,6 +39,7 @@ const initialState = {
       show: {
         master: true,
         "company-manager": true,
+        "store-manager": true,
       },
     },
     {
@@ -36,6 +49,7 @@ const initialState = {
       show: {
         master: true,
         "company-manager": true,
+        "store-manager": true,
       },
     },
   ],

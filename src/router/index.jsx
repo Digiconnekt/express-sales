@@ -1,9 +1,9 @@
 import { useRoutes } from "react-router-dom";
 import SideMenu from "../layouts/SideMenu";
-import StoreDashboard from "../pages/StoreDashboard";
 
 import Admin from "../pages/Admin";
 import Company from "../pages/Company";
+import Store from "../pages/Store";
 import Nfc from "../pages/NFC";
 import Login from "../pages/Login";
 import NfcHistory from "../pages/NFC/History";
@@ -31,7 +31,7 @@ function Router() {
         },
         {
           path: "/store",
-          element: <StoreDashboard />,
+          element: <Store />,
         },
         {
           path: "/nfc",

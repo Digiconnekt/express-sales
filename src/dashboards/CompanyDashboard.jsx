@@ -4,14 +4,10 @@ import { useSelector } from "react-redux";
 const CompanyDashboard = ({ children }) => {
   const user = useSelector((state) => state.auth.user);
 
-  if (user && (user.role === "company-manager" || user.role === "master")) {
+  if (user && user.role === "store-manager") {
+    return <Navigate to={`/store`} />;
+  } else {
     return <>{children}</>;
-  }
-  // else if (user && user.id !== id) {
-  //   return <Navigate to={`/company/${user.id}`} />;
-  // }
-  else {
-    return null;
   }
 };
 
