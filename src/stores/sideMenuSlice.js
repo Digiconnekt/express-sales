@@ -6,16 +6,37 @@ const initialState = {
       icon: "Home",
       pathname: "/",
       title: "Dashboard",
+      show: {
+        master: true,
+        "company-manager": false,
+      },
+    },
+    {
+      icon: "Home",
+      pathname: "/company",
+      title: "Company",
+      show: {
+        master: true,
+        "company-manager": true,
+      },
     },
     {
       icon: "Wifi",
       pathname: "/nfc",
       title: "NFC",
+      show: {
+        master: true,
+        "company-manager": true,
+      },
     },
     {
       icon: "Bell",
       pathname: "/notification",
       title: "Send Notification",
+      show: {
+        master: true,
+        "company-manager": true,
+      },
     },
   ],
 };
