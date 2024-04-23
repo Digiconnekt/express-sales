@@ -11,24 +11,35 @@ const useAllOrders = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const allOrdersReq = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const res = await axiosInstance.get("/ecommerce/orders", headers);
-      setData(res?.data);
-      // console.log("all orders res", res);
-    } catch (error) {
-      setError(error?.response?.data);
-      toast.error(error.response.data.message || "Failed to fetch all orders");
-      // console.log("all orders error", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [axiosInstance, headers]);
+  const allOrdersReq = useCallback(
+    async (query) => {
+      try {
+        setIsLoading(true);
+        const res = await axiosInstance.get(
+          `/ecommerce/orders${query ? `?${query}` : ""}`,
+          headers
+        );
+        setData(res?.data);
+        // console.log("all orders res", res);
+      } catch (error) {
+        setError(error?.response?.data);
+        toast.error(
+          error.response.data.message || "Failed to fetch all orders"
+        );
+        // console.log("all orders error", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [axiosInstance, headers]
+  );
 
-  const reFetch = useCallback(async () => {
-    await allOrdersReq();
-  }, [allOrdersReq]);
+  const reFetch = useCallback(
+    async (query) => {
+      await allOrdersReq(query);
+    },
+    [allOrdersReq]
+  );
 
   return { isLoading, data, error, allOrdersReq, reFetch };
 };

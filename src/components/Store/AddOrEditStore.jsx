@@ -22,7 +22,7 @@ const AddOrEditStore = ({
     email_id: "",
     store_location: "",
     contact_no: "",
-    company_id: user.id || "",
+    company_id: user.companyId || "",
     password: "",
     status: "1",
   });

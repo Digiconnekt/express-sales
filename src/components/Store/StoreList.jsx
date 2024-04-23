@@ -11,6 +11,7 @@ import Lucide from "../../base-components/Lucide";
 import Litepicker from "../../base-components/Litepicker";
 import { Link, useNavigate } from "react-router-dom";
 import { FormInput } from "../../base-components/Form";
+import FilterStore from "./FilterStore";
 
 import useAllStores from "../../apis/store/Stores";
 import useDeleteStore from "../../apis/store/Delete";
@@ -50,22 +51,7 @@ const StoreList = () => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-  const [salesReportFilter, setSalesReportFilter] = useState();
-  const [filterData, setFilterData] = useState({
-    name: "",
-    company_id: "",
-    email: "",
-    location: "",
-    contact_no: "",
-  });
-
-  const onChangeFilterHandler = (e) => {
-    const { name, value } = e.target;
-    setFilterData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     allStoresReq();
@@ -79,22 +65,6 @@ const StoreList = () => {
   const editModalHandler = (id) => {
     setShowEditModal(true);
     setSelectedId(id);
-  };
-
-  const filterHandler = () => {
-    reFetchAllStores(
-      `name=${filterData.name}&company_id=${filterData.company_id}&location=${filterData.location}&email=${filterData.email}`
-    );
-  };
-
-  const resetFilterHandler = () => {
-    reFetchAllStores();
-    setFilterData({
-      name: "",
-      company_id: "",
-      email: "",
-      location: "",
-    });
   };
 
   const reFetch = () => {
@@ -111,8 +81,8 @@ const StoreList = () => {
               Total Stores - {dataAllStores?.data?.length}
             </h2>
           </div>
-          {user.role === "company-manager" && (
-            <div className="w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
+          <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
+            {user.role === "company-manager" && (
               <Button
                 variant="primary"
                 className="mr-2 shadow-md"
@@ -120,102 +90,17 @@ const StoreList = () => {
               >
                 Add New Store
               </Button>
-            </div>
-          )}
-        </div>
-
-        <div className="bg-white mt-5 p-3 rounded-md">
-          <div className="grid grid-cols-12 items-center gap-5">
-            <div className="col-span-3">
-              <FormInput
-                id="store-name"
-                type="text"
-                placeholder="Store Name"
-                name="name"
-                value={filterData.name}
-                onChange={onChangeFilterHandler}
-              />
-            </div>
-            <div className="col-span-3">
-              <FormInput
-                id="company-id"
-                type="text"
-                placeholder="Company Id"
-                name="company_id"
-                value={filterData.company_id}
-                onChange={onChangeFilterHandler}
-              />
-            </div>
-            <div className="col-span-3">
-              <FormInput
-                id="email"
-                type="email"
-                placeholder="Store Email"
-                name="email"
-                value={filterData.email}
-                onChange={onChangeFilterHandler}
-              />
-            </div>
-            <div className="col-span-3">
-              <FormInput
-                id="location"
-                type="text"
-                placeholder="Location"
-                name="location"
-                value={filterData.location}
-                onChange={onChangeFilterHandler}
-              />
-            </div>
-            <div className="col-span-3">
-              <div className="relative text-slate-500 me-5">
-                <Lucide
-                  icon="Calendar"
-                  className="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3"
-                />
-                <Litepicker
-                  value={salesReportFilter}
-                  onChange={setSalesReportFilter}
-                  options={{
-                    autoApply: false,
-                    singleMode: false,
-                    numberOfColumns: 2,
-                    numberOfMonths: 2,
-                    showWeekNumbers: true,
-                    dropdowns: {
-                      minYear: 1990,
-                      maxYear: null,
-                      months: true,
-                      years: true,
-                    },
-                  }}
-                  className="pl-10 sm:w-56 !box"
-                />
-              </div>
-            </div>
-            <div className="col-span-1">
-              <Button
-                id="tabulator-html-filter-go"
-                variant="primary"
-                type="button"
-                className="w-full "
-                onClick={filterHandler}
-              >
-                Filter
-              </Button>
-            </div>
-            <div className="col-span-1">
-              <Button
-                id="tabulator-html-filter-reset"
-                variant="secondary"
-                type="button"
-                className="w-full"
-                onClick={resetFilterHandler}
-              >
-                Reset
-              </Button>
-            </div>
+            )}
+            <Button
+              variant="outline-primary"
+              onClick={() => setShowFilter(!showFilter)}
+            >
+              <Lucide icon={showFilter ? "X" : "Filter"} className="w-5 h-5" />
+            </Button>
           </div>
         </div>
+
+        {showFilter && <FilterStore reFetchAllStores={reFetchAllStores} />}
 
         {isLoadingAllStores ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>

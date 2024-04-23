@@ -21,11 +21,12 @@ const useLogin = () => {
       setData(res?.data);
       dispatch(
         login({
-          id: res?.data?.data?.user_id,
+          userId: res?.data?.data?.user_id,
           name: res?.data?.data?.name,
           email: res?.data?.data?.email,
           role: res?.data?.data?.role,
           token: res?.data?.data?.token,
+          companyId: res?.data?.data?.company_id,
         })
       );
       toast.success("Logged in successfully");

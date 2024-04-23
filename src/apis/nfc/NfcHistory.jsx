@@ -3,7 +3,7 @@ import useAxios from "..";
 import toast from "react-hot-toast";
 import useAuthHeader from "../authHeader";
 
-const useAllCustomers = () => {
+const useNfcHistory = () => {
   const axiosInstance = useAxios();
   const headers = useAuthHeader();
 
@@ -11,22 +11,22 @@ const useAllCustomers = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const allCustomersReq = useCallback(
-    async (query) => {
+  const nfcHistoryReq = useCallback(
+    async (nfcId, query) => {
       try {
         setIsLoading(true);
         const res = await axiosInstance.get(
-          `/customers${query ? `?${query}` : ""}`,
+          `/nfc/history${query ? `?${query}` : ""}`,
           headers
         );
         setData(res?.data);
-        // console.log("all customers res", res);
+        console.log("nfc history res", res);
       } catch (error) {
         setError(error?.response?.data);
         toast.error(
-          error.response.data.message || "Failed to fetch all customers"
+          error.response.data.message || "Failed to fetch nfc history"
         );
-        // console.log("all customers error", error);
+        console.log("nfc history error", error);
       } finally {
         setIsLoading(false);
       }
@@ -35,13 +35,13 @@ const useAllCustomers = () => {
   );
 
   const reFetch = useCallback(
-    async (query) => {
-      await allCustomersReq(query);
+    async (nfcId, query) => {
+      await nfcHistoryReq(nfcId, query);
     },
-    [allCustomersReq]
+    [nfcHistoryReq]
   );
 
-  return { isLoading, data, error, allCustomersReq, reFetch };
+  return { isLoading, data, error, nfcHistoryReq, reFetch };
 };
 
-export default useAllCustomers;
+export default useNfcHistory;

@@ -7,9 +7,8 @@ import DeleteAlert from "../Modals/DeleteAlert";
 import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
 import AddOrEditCompany from "./AddOrEditCompany";
-import Litepicker from "../../base-components/Litepicker";
 import { Link, useNavigate } from "react-router-dom";
-import { FormInput } from "../../base-components/Form";
+import FilterCompany from "./FilterCompany";
 
 import useAllCompanies from "../../apis/company/Companies";
 import useDeleteCompany from "../../apis/company/Delete";
@@ -48,40 +47,11 @@ const CompanyList = ({ reFetchCard }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-  const [dateFilter, setDateFilter] = useState();
-  const [startDateFilter, setStartDateFilter] = useState("");
-  const [endDateFilter, setEndDateFilter] = useState("");
-  const [filterData, setFilterData] = useState({
-    name: "",
-    company_email: "",
-    location: "",
-  });
-
-  const onChangeFilterHandler = (e) => {
-    const { name, value } = e.target;
-    setFilterData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     allCompaniesReq();
   }, []);
-
-  useEffect(() => {
-    if (dateFilter) {
-      const [start, end] = dateFilter.split(" - ");
-
-      const startDate = moment(start, "DD MMM, YYYY");
-      const endDate = moment(end, "DD MMM, YYYY");
-      const formattedStartDate = startDate.format("DD/MM/YYYY");
-      const formattedEndDate = endDate.format("DD/MM/YYYY");
-
-      setStartDateFilter(formattedStartDate);
-      setEndDateFilter(formattedEndDate);
-    }
-  }, [dateFilter]);
 
   const deleteHandler = (id) => {
     setShowDeleteAlert(true);
@@ -93,21 +63,6 @@ const CompanyList = ({ reFetchCard }) => {
     setSelectedId(id);
   };
 
-  const filterHandler = () => {
-    reFetchAllCompanies(
-      `name=${filterData.name}&company_email=${filterData.company_email}&location=${filterData.location}&start_date=${startDateFilter}&end_date=${endDateFilter}`
-    );
-  };
-
-  const resetFilterHandler = () => {
-    reFetchAllCompanies();
-    setFilterData({
-      name: "",
-      company_email: "",
-      location: "",
-    });
-  };
-
   const reFetch = () => {
     reFetchAllCompanies();
     reFetchCard();
@@ -116,7 +71,7 @@ const CompanyList = ({ reFetchCard }) => {
   return (
     <>
       <div className="col-span-12 mt-6">
-        <div className="flex flex-wrap items-center justify-between col-span-12 mt-2 intro-y sm:flex-nowrap">
+        <div className="flex flex-wrap items-center justify-between col-span-12 mt-2 intro-y sm:flex-nowrap border-b pb-5">
           <div className="w-56 text-slate-500">
             <h2 className="text-lg font-semibold">
               Total Companies -{" "}
@@ -127,7 +82,7 @@ const CompanyList = ({ reFetchCard }) => {
               )}
             </h2>
           </div>
-          <div className="w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
+          <div className="flex w-full mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
             <Button
               variant="primary"
               className="mr-2 shadow-md"
@@ -135,91 +90,18 @@ const CompanyList = ({ reFetchCard }) => {
             >
               Add New Company
             </Button>
+            <Button
+              variant="outline-primary"
+              onClick={() => setShowFilter(!showFilter)}
+            >
+              <Lucide icon={showFilter ? "X" : "Filter"} className="w-5 h-5" />
+            </Button>
           </div>
         </div>
 
-        <div className="bg-white mt-5 p-3 rounded-md">
-          <div className="grid grid-cols-12 items-center gap-5">
-            <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
-              <FormInput
-                id="manager-name"
-                type="text"
-                placeholder="Manager Name"
-                name="name"
-                value={filterData.name}
-                onChange={onChangeFilterHandler}
-              />
-            </div>
-            <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
-              <FormInput
-                id="company-email"
-                type="text"
-                placeholder="Company Email"
-                name="company_email"
-                value={filterData.company_email}
-                onChange={onChangeFilterHandler}
-              />
-            </div>
-            <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
-              <FormInput
-                id="location"
-                type="text"
-                placeholder="Location"
-                name="location"
-                value={filterData.location}
-                onChange={onChangeFilterHandler}
-              />
-            </div>
-            <div className="md:col-span-4 lg:col-span-3 xl:col-span-2">
-              <div className="relative text-slate-500">
-                <Lucide
-                  icon="Calendar"
-                  className="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3"
-                />
-                <Litepicker
-                  value={dateFilter}
-                  onChange={setDateFilter}
-                  options={{
-                    autoApply: false,
-                    singleMode: false,
-                    numberOfColumns: 2,
-                    numberOfMonths: 2,
-                    showWeekNumbers: true,
-                    dropdowns: {
-                      minYear: 1990,
-                      maxYear: null,
-                      months: true,
-                      years: true,
-                    },
-                  }}
-                  className="pl-10 !box"
-                />
-              </div>
-            </div>
-            <div className="col-span-3 xl:col-span-2">
-              <Button
-                id="tabulator-html-filter-go"
-                variant="primary"
-                type="button"
-                className="w-full "
-                onClick={filterHandler}
-              >
-                Filter
-              </Button>
-            </div>
-            <div className="col-span-3 xl:col-span-2">
-              <Button
-                id="tabulator-html-filter-reset"
-                variant="secondary"
-                type="button"
-                className="w-full"
-                onClick={resetFilterHandler}
-              >
-                Reset
-              </Button>
-            </div>
-          </div>
-        </div>
+        {showFilter && (
+          <FilterCompany reFetchAllCompanies={reFetchAllCompanies} />
+        )}
 
         {isLoadingAllCompanies ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>

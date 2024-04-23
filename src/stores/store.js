@@ -5,7 +5,6 @@ import sideMenuReducer from "./sideMenuSlice";
 import simpleMenuReducer from "./simpleMenuSlice";
 import topMenuReducer from "./topMenuSlice";
 import authReducer from "./authSlice";
-import companyReducer from "./companySlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +14,5 @@ export const store = configureStore({
     simpleMenu: simpleMenuReducer,
     topMenu: topMenuReducer,
     auth: authReducer,
-    company: companyReducer,
   },
 });

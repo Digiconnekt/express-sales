@@ -11,24 +11,33 @@ const useAllNfcs = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const allNfcsReq = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const res = await axiosInstance.get("/nfc", headers);
-      setData(res?.data);
-      // console.log("all nfc res", res);
-    } catch (error) {
-      setError(error?.response?.data);
-      toast.error(error.response.data.message || "Failed to fetch all nfc");
-      // console.log("all nfc error", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [axiosInstance, headers]);
+  const allNfcsReq = useCallback(
+    async (query) => {
+      try {
+        setIsLoading(true);
+        const res = await axiosInstance.get(
+          `/nfc${query ? `?${query}` : ""}`,
+          headers
+        );
+        setData(res?.data);
+        // console.log("all nfc res", res);
+      } catch (error) {
+        setError(error?.response?.data);
+        toast.error(error.response.data.message || "Failed to fetch all nfc");
+        // console.log("all nfc error", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [axiosInstance, headers]
+  );
 
-  const reFetch = useCallback(async () => {
-    await allNfcsReq();
-  }, [allNfcsReq]);
+  const reFetch = useCallback(
+    async (query) => {
+      await allNfcsReq(query);
+    },
+    [allNfcsReq]
+  );
 
   return { isLoading, data, error, allNfcsReq, reFetch };
 };
