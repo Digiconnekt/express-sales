@@ -30,7 +30,7 @@ const useLogin = () => {
         })
       );
       toast.success("Logged in successfully");
-      console.log("login res", res);
+      // console.log("login res", res);
 
       if (res?.data?.data?.role === "master") {
         navigate("/");
@@ -48,7 +48,7 @@ const useLogin = () => {
           ? error.response.data.msg
           : "Failed to login"
       );
-      console.log("login error", error);
+      // console.log("login error", error);
     } finally {
       setIsLoading(false);
     }
