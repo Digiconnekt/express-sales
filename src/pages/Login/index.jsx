@@ -113,10 +113,10 @@ function Main() {
                     }
                   />
                 </div>
-                <div className="flex mt-4 text-xs intro-x text-slate-600 dark:text-slate-500 sm:text-sm">
+                {/* <div className="flex mt-4 text-xs intro-x text-slate-600 dark:text-slate-500 sm:text-sm">
                   <div className="flex items-center mr-auto"></div>
                   <Link to="/forgot-password">Forgot Password?</Link>
-                </div>
+                </div> */}
                 <div className="mt-5 text-center intro-x xl:mt-8 xl:text-left">
                   <Button
                     variant="primary"
