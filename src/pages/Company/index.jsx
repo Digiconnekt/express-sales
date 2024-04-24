@@ -8,8 +8,10 @@ import OrderList from "../../components/Order/OrderList";
 import RevenueList from "../../components/Revenue/RevenueList";
 import CustomerList from "../../components/Customer/CustomerList";
 import useCard from "../../apis/DashboardTopCards/card";
+import { useParams } from "react-router-dom";
 
 const index = () => {
+  const { companyId } = useParams();
   const {
     cardReq,
     data: dataCard,
@@ -64,7 +66,7 @@ const index = () => {
   }, [dataCard]);
 
   return (
-    <CompanyDashboard>
+    <CompanyDashboard companyId={companyId}>
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12">
           <div className="grid grid-cols-12 gap-6">
@@ -82,7 +84,9 @@ const index = () => {
             {/* END: General Report */}
 
             {/* START: Stores Table */}
-            {cardType === "store" && <StoreList reFetchCard={reFetchCard} />}
+            {cardType === "store" && (
+              <StoreList reFetchCard={reFetchCard} companyId={companyId} />
+            )}
             {/* END: Stores Table */}
 
             {/* START: Revenue Table */}

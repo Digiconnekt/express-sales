@@ -26,7 +26,7 @@ function Router() {
           element: <Admin />,
         },
         {
-          path: "/company",
+          path: "/company/:companyId?",
           element: <Company />,
         },
         {

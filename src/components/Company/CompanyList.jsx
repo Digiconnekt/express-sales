@@ -152,7 +152,7 @@ const CompanyList = ({ reFetchCard }) => {
                       <Table.Tr key={i} className="intro-x">
                         <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           <Link
-                            to={`/company`}
+                            to={`/company/${company?.id}`}
                             className="font-medium whitespace-nowrap"
                           >
                             {company?.company_name

@@ -8,9 +8,7 @@ import Table from "../../base-components/Table";
 import DeleteAlert from "../Modals/DeleteAlert";
 import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
-import Litepicker from "../../base-components/Litepicker";
 import { Link, useNavigate } from "react-router-dom";
-import { FormInput } from "../../base-components/Form";
 import FilterStore from "./FilterStore";
 
 import useAllStores from "../../apis/store/Stores";
@@ -18,7 +16,7 @@ import useDeleteStore from "../../apis/store/Delete";
 import useShowStore from "../../apis/store/Show";
 import useUpdateStore from "../../apis/store/Update";
 
-const StoreList = () => {
+const StoreList = ({ reFetchCard, companyId }) => {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
@@ -54,7 +52,11 @@ const StoreList = () => {
   const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
-    allStoresReq();
+    if (companyId) {
+      allStoresReq(`company_id=${companyId}`);
+    } else {
+      allStoresReq();
+    }
   }, []);
 
   const deleteHandler = (id) => {

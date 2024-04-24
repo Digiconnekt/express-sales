@@ -1,14 +1,9 @@
-import clsx from "clsx";
 import moment from "moment";
-import EditModal from "../Modals/Edit";
 import { useEffect, useState } from "react";
 import Table from "../../base-components/Table";
-import DeleteAlert from "../Modals/DeleteAlert";
 import Button from "../../base-components/Button";
 import Lucide from "../../base-components/Lucide";
-import Litepicker from "../../base-components/Litepicker";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { FormInput, FormLabel } from "../../base-components/Form";
+import { Link, useNavigate } from "react-router-dom";
 import FilterOrder from "./FilterOrder";
 
 import useAllOrders from "../../apis/order/Orders";

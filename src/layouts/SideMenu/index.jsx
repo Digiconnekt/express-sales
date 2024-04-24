@@ -11,11 +11,9 @@ import { selectSideMenu } from "../../stores/sideMenuSlice";
 import { useAppSelector } from "../../stores/hooks";
 import { linkTo, nestedMenu, enter, leave } from "./side-menu";
 import Lucide from "../../base-components/Lucide";
-import logoUrl from "../../assets/images/logo.svg";
 import clsx from "clsx";
 import TopBar from "../../components/TopBar";
 import MobileMenu from "../../components/MobileMenu";
-import DarkModeSwitcher from "../../components/DarkModeSwitcher";
 import SideMenuTooltip from "../../components/SideMenuTooltip";
 import { useSelector } from "react-redux";
 
@@ -42,7 +40,11 @@ function Main() {
         {/* BEGIN: Side Menu */}
         <nav className="pr-5 pb-16 overflow-x-hidden hidden md:block w-[85px] xl:w-[230px]">
           <Link to="/" className="flex items-center pt-4 pl-5 intro-x">
-            <img alt="Express Sales" className="w-6" src={logoUrl} />
+            <img
+              alt="Express Sales"
+              className="w-6"
+              src={"../../../images/logo-white.png"}
+            />
             <span className="hidden ml-3 text-lg text-white xl:block">
               Express Sales
             </span>
