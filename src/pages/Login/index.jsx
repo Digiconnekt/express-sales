@@ -54,7 +54,7 @@ function Main() {
                 <img
                   alt="Midone Tailwind HTML Admin Template"
                   className="w-6"
-                  src={logoUrl}
+                  src={"../../../images/logo-white.png"}
                 />
                 <span className="ml-3 text-lg text-white"> Express Sales </span>
               </div>
@@ -69,7 +69,7 @@ function Main() {
                   sign in to your account.
                 </div>
                 <div className="mt-5 text-lg text-white -intro-x text-opacity-70 dark:text-slate-400">
-                  Manage all your e-commerce accounts in one place
+                  Manage your e-commerce accounts in one place
                 </div>
               </div>
             </div>

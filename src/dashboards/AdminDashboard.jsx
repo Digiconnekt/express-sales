@@ -13,4 +13,14 @@ const AdminDashboard = ({ children }) => {
   }
 };
 
+export const OnlyAdmin = ({ children }) => {
+  const user = useSelector((state) => state.auth.user);
+
+  if (user && user.role === "master") {
+    return <>{children}</>;
+  } else {
+    return <Navigate to={`/`} />;
+  }
+};
+
 export default AdminDashboard;

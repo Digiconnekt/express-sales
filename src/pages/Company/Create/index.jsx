@@ -1,11 +1,12 @@
 import useCreateCompany from "../../../apis/company/Create";
 import AddOrEditCompany from "../../../components/Company/AddOrEditCompany";
+import { OnlyAdmin } from "../../../dashboards/AdminDashboard";
 
 function Main() {
   const { createCompanyReq, data, error, isLoading } = useCreateCompany();
 
   return (
-    <>
+    <OnlyAdmin>
       <div className="flex items-center mt-8 intro-y">
         <h2 className="mr-auto text-lg font-medium">Create New Company</h2>
       </div>
@@ -24,7 +25,7 @@ function Main() {
           {/* END: Form Layout */}
         </div>
       </div>
-    </>
+    </OnlyAdmin>
   );
 }
 
