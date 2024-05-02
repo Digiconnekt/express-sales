@@ -1,33 +1,68 @@
 import Lucide from "../../base-components/Lucide";
 import Breadcrumb from "../../base-components/Breadcrumb";
-import { Menu, Popover } from "../../base-components/Headless";
-import fakerData from "../../utils/faker";
+import { Menu } from "../../base-components/Headless";
 import _ from "lodash";
-import clsx from "clsx";
-import { useNavigate, useLocation } from "react-router";
-import Litepicker from "../../base-components/Litepicker";
-import { useState } from "react";
+import { useLocation } from "react-router";
+import { useEffect, useState } from "react";
 import useLogout from "../../apis/logout/Logout";
 import { useSelector } from "react-redux";
 
 import LoadingIcon from "../../base-components/LoadingIcon";
 
 function Main() {
-  const navigate = useNavigate();
   const location = useLocation();
-
   const user = useSelector((state) => state.auth.user);
-  const { data, error, isLoading, logoutReq } = useLogout();
-  const [salesReportFilter, setSalesReportFilter] = useState();
+  const { isLoading, logoutReq } = useLogout();
+
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    const pathParts = pathname.split("/").filter((part) => part !== "");
+
+    const homeBreadcrumb = {
+      title: "Dashboard",
+      path: "/",
+      active: pathname === "/",
+    };
+    const breadcrumbs = [
+      homeBreadcrumb,
+      ...pathParts.map((part, index) => ({
+        title: part,
+        path: `/${pathParts.slice(0, index + 1).join("/")}`,
+        active: `/${pathParts.slice(0, index + 1).join("/")}` === pathname,
+      })),
+    ];
+
+    setBreadcrumbs(breadcrumbs);
+  }, [location]);
 
   return (
     <>
       {/* BEGIN: Top Bar */}
       <div className="h-[67px] z-[51] flex items-center relative border-b border-slate-200">
         {/* BEGIN: Breadcrumb */}
-        <div className="hidden mr-auto -intro-x sm:flex text-primary">
-          Dashboard
-        </div>
+        <Breadcrumb className="hidden mr-auto -intro-x sm:flex">
+          {breadcrumbs?.map((breadcrumb, i) => (
+            <Breadcrumb.Link
+              to={breadcrumb?.path}
+              key={i}
+              className={`${
+                breadcrumb?.active
+                  ? "text-primary hover:text-primary"
+                  : "text-gray-500 hover:text-primary"
+              }`}
+            >
+              {i === 0 && (
+                <Lucide
+                  icon="Home"
+                  className="w-4 h-4 me-1 inline-block mb-1"
+                />
+              )}
+              {breadcrumb?.title}
+            </Breadcrumb.Link>
+          ))}
+        </Breadcrumb>
 
         {/* END: Breadcrumb */}
 
@@ -108,10 +143,7 @@ function Main() {
         {/* BEGIN: Account Menu */}
         <Menu>
           <Menu.Button className="block w-8 h-8 overflow-hidden rounded-full shadow-lg image-fit zoom-in intro-x">
-            <img
-              alt="Midone Tailwind HTML Admin Template"
-              src={fakerData[9].photos[0]}
-            />
+            <img alt={user?.name} src={"../../../../images/user-profile.jpg"} />
           </Menu.Button>
           <Menu.Items className="w-56 mt-px text-white bg-primary">
             <Menu.Header className="font-normal">

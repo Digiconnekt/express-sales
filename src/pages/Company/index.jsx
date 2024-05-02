@@ -5,7 +5,6 @@ import Card from "../../components/Card";
 
 import StoreList from "../../components/Store/StoreList";
 import OrderList from "../../components/Order/OrderList";
-import RevenueList from "../../components/Revenue/RevenueList";
 import CustomerList from "../../components/Customer/CustomerList";
 import useCard from "../../apis/DashboardTopCards/card";
 import { useParams } from "react-router-dom";
@@ -90,15 +89,15 @@ const index = () => {
             {/* END: Stores Table */}
 
             {/* START: Revenue Table */}
-            {cardType === "revenue" && <RevenueList />}
+            {cardType === "revenue" && <OrderList companyId={companyId} />}
             {/* END: Revenue Table */}
 
             {/* START: Orders Table */}
-            {cardType === "order" && <OrderList />}
+            {cardType === "order" && <OrderList companyId={companyId} />}
             {/* END: Orders Table */}
 
             {/* START: Customer Table */}
-            {cardType === "customer" && <CustomerList />}
+            {cardType === "customer" && <CustomerList companyId={companyId} />}
             {/* END: Customer Table */}
           </div>
         </div>

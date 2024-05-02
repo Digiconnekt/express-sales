@@ -28,6 +28,7 @@ function Litepicker(props) {
   }, [props.value]);
 
   const { options, value, onChange, getRef, ...computedProps } = props;
+
   return (
     <FormInput
       ref={litepickerRef}
@@ -41,9 +42,28 @@ function Litepicker(props) {
   );
 }
 
+const getDefaultValue = () => {
+  const today = new Date();
+  const oneYearBack = new Date(
+    today.getFullYear() - 1,
+    today.getMonth(),
+    today.getDate()
+  );
+
+  return `${oneYearBack.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })} - ${today.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })}`;
+};
+
 Litepicker.defaultProps = {
   options: {},
-  value: "",
+  value: getDefaultValue(),
   onChange: () => {},
   getRef: () => {},
 };

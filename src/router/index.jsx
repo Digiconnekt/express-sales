@@ -30,8 +30,16 @@ function Router() {
           element: <Company />,
         },
         {
-          path: "/store",
+          path: "/company/create",
+          element: <CompanyCreate />,
+        },
+        {
+          path: "/store/:storeId?",
           element: <Store />,
+        },
+        {
+          path: "/store/create",
+          element: <StoreCreate />,
         },
         {
           path: "/nfc",
@@ -40,14 +48,6 @@ function Router() {
         {
           path: "/nfc/history/:nfcId",
           element: <NfcHistory />,
-        },
-        {
-          path: "/company/create",
-          element: <CompanyCreate />,
-        },
-        {
-          path: "/store/create",
-          element: <StoreCreate />,
         },
         {
           path: "/employee/create",

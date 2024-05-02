@@ -4,8 +4,11 @@ import Lucide from "../../base-components/Lucide";
 import Button from "../../base-components/Button";
 import { FormInput } from "../../base-components/Form";
 import Litepicker from "../../base-components/Litepicker";
+import { useSelector } from "react-redux";
 
-const FilterCustomer = ({ reFetchAllCustomers }) => {
+const FilterCustomer = ({ reFetchAllCustomers, companyId, storeId }) => {
+  const user = useSelector((state) => state.auth.user);
+
   const [dateFilter, setDateFilter] = useState();
   const [startDateFilter, setStartDateFilter] = useState("");
   const [endDateFilter, setEndDateFilter] = useState("");
@@ -30,8 +33,8 @@ const FilterCustomer = ({ reFetchAllCustomers }) => {
 
       const startDate = moment(start, "DD MMM, YYYY");
       const endDate = moment(end, "DD MMM, YYYY");
-      const formattedStartDate = startDate.format("DD/MM/YYYY");
-      const formattedEndDate = endDate.format("DD/MM/YYYY");
+      const formattedStartDate = startDate.format("YYYY-MM-DD");
+      const formattedEndDate = endDate.format("YYYY-MM-DD");
 
       setStartDateFilter(formattedStartDate);
       setEndDateFilter(formattedEndDate);
@@ -40,7 +43,11 @@ const FilterCustomer = ({ reFetchAllCustomers }) => {
 
   const filterHandler = () => {
     reFetchAllCustomers(
-      `store_id=${filterData.store_id}&company_id=${filterData.company_id}&email=${filterData.email}&contact_no=${filterData.contact_no}&start_date=${startDateFilter}&end_date=${endDateFilter}`
+      `store_id=${filterData.store_id}&company_id=${
+        companyId ? companyId : filterData.company_id
+      }&email=${filterData.email}&contact_no=${
+        filterData.contact_no
+      }&start_date=${startDateFilter}&end_date=${endDateFilter}`
     );
   };
 
@@ -52,32 +59,40 @@ const FilterCustomer = ({ reFetchAllCustomers }) => {
       email: "",
       contact_no: "",
     });
+    setDateFilter();
   };
 
   return (
     <>
       <div className="bg-white mt-5 p-3 rounded-md">
         <div className="grid grid-cols-12 items-center gap-5">
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-            <FormInput
-              id="store-id"
-              type="text"
-              placeholder="Store Id"
-              name="store_id"
-              value={filterData.store_id}
-              onChange={onChangeFilterHandler}
-            />
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-            <FormInput
-              id="company-id"
-              type="text"
-              placeholder="Company Id"
-              name="company_id"
-              value={filterData.company_id}
-              onChange={onChangeFilterHandler}
-            />
-          </div>
+          {!storeId && user.role !== "store-manager" && (
+            <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
+              <FormInput
+                id="store-id"
+                type="text"
+                placeholder="Store Id"
+                name="store_id"
+                value={filterData.store_id}
+                onChange={onChangeFilterHandler}
+              />
+            </div>
+          )}
+          {!companyId &&
+            user.role !== "company-manager" &&
+            !storeId &&
+            user.role !== "store-manager" && (
+              <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
+                <FormInput
+                  id="company-id"
+                  type="text"
+                  placeholder="Company Id"
+                  name="company_id"
+                  value={filterData.company_id}
+                  onChange={onChangeFilterHandler}
+                />
+              </div>
+            )}
           <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
             <FormInput
               id="email"

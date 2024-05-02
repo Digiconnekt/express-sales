@@ -85,6 +85,9 @@ const NfcList = () => {
                             BARCODE
                           </Table.Th>
                           <Table.Th className="text-center border-b-0 whitespace-nowrap">
+                            CREATED AT
+                          </Table.Th>
+                          <Table.Th className="text-center border-b-0 whitespace-nowrap">
                             LAST UPDATED AT
                           </Table.Th>
                           <Table.Th className="text-center border-b-0 whitespace-nowrap">
@@ -111,6 +114,11 @@ const NfcList = () => {
                             </Table.Td>
                             <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                               {nfc?.barcode ? nfc?.barcode : "-"}
+                            </Table.Td>
+                            <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
+                              {nfc.created_at
+                                ? moment(nfc.created_at).format("DD/MM/YYYY")
+                                : "-"}
                             </Table.Td>
                             <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                               {nfc.updated_at

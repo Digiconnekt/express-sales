@@ -1,10 +1,14 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const StoreDashboard = ({ children }) => {
+const StoreDashboard = ({ children, storeId }) => {
   const user = useSelector((state) => state.auth.user);
 
-  return <>{children}</>;
+  if (user && user.role === "store-manager" && storeId) {
+    return <Navigate to={`/store`} />;
+  } else {
+    return <>{children}</>;
+  }
 };
 
 export const OnlyStore = ({ children }) => {

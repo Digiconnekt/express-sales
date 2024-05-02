@@ -9,8 +9,10 @@ import StoreList from "../../components/Store/StoreList";
 import OrderList from "../../components/Order/OrderList";
 import CompanyList from "../../components/Company/CompanyList";
 import CustomerList from "../../components/Customer/CustomerList";
+import { useParams } from "react-router-dom";
 
 const index = () => {
+  const { storeId } = useParams();
   const {
     cardReq,
     data: dataCard,
@@ -57,7 +59,7 @@ const index = () => {
   }, [dataCard]);
 
   return (
-    <StoreDashboard>
+    <StoreDashboard storeId={storeId}>
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12">
           <div className="grid grid-cols-12 gap-6">
@@ -75,15 +77,15 @@ const index = () => {
             {/* END: General Report */}
 
             {/* START: Revenue Table */}
-            {cardType === "revenue" && <OrderList />}
+            {cardType === "revenue" && <OrderList storeId={storeId} />}
             {/* END: Revenue Table */}
 
             {/* START: Orders Table */}
-            {cardType === "order" && <OrderList />}
+            {cardType === "order" && <OrderList storeId={storeId} />}
             {/* END: Orders Table */}
 
             {/* START: Customer Table */}
-            {cardType === "customer" && <CustomerList />}
+            {cardType === "customer" && <CustomerList storeId={storeId} />}
             {/* END: Customer Table */}
           </div>
         </div>

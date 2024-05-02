@@ -8,7 +8,7 @@ import FilterOrder from "./FilterOrder";
 
 import useAllOrders from "../../apis/order/Orders";
 
-const OrderList = () => {
+const OrderList = ({ companyId, storeId }) => {
   const navigate = useNavigate();
 
   const {
@@ -21,7 +21,13 @@ const OrderList = () => {
   const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
-    allOrdersReq();
+    if (companyId) {
+      allOrdersReq(`company_id=${companyId}`);
+    } else if (storeId) {
+      allOrdersReq(`store_id=${storeId}`);
+    } else {
+      allOrdersReq();
+    }
   }, []);
 
   return (
@@ -48,7 +54,13 @@ const OrderList = () => {
           </div>
         </div>
 
-        {showFilter && <FilterOrder reFetchAllOrders={reFetchAllOrders} />}
+        {showFilter && (
+          <FilterOrder
+            reFetchAllOrders={reFetchAllOrders}
+            companyId={companyId}
+            storeId={storeId}
+          />
+        )}
 
         {isLoadingAllOrders ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>

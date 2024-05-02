@@ -4,8 +4,11 @@ import Lucide from "../../base-components/Lucide";
 import Button from "../../base-components/Button";
 import { FormInput } from "../../base-components/Form";
 import Litepicker from "../../base-components/Litepicker";
+import { useSelector } from "react-redux";
 
-const FilterOrder = ({ reFetchAllOrders }) => {
+const FilterOrder = ({ reFetchAllOrders, companyId, storeId }) => {
+  const user = useSelector((state) => state.auth.user);
+
   const [dateFilter, setDateFilter] = useState();
   const [startDateFilter, setStartDateFilter] = useState("");
   const [endDateFilter, setEndDateFilter] = useState("");
@@ -29,8 +32,8 @@ const FilterOrder = ({ reFetchAllOrders }) => {
 
       const startDate = moment(start, "DD MMM, YYYY");
       const endDate = moment(end, "DD MMM, YYYY");
-      const formattedStartDate = startDate.format("DD/MM/YYYY");
-      const formattedEndDate = endDate.format("DD/MM/YYYY");
+      const formattedStartDate = startDate.format("YYYY-MM-DD");
+      const formattedEndDate = endDate.format("YYYY-MM-DD");
 
       setStartDateFilter(formattedStartDate);
       setEndDateFilter(formattedEndDate);
@@ -39,7 +42,11 @@ const FilterOrder = ({ reFetchAllOrders }) => {
 
   const filterHandler = () => {
     reFetchAllOrders(
-      `order_id=${filterData.order_id}&company_id=${filterData.company_id}&store_id=${filterData.store_id}&start_date=${startDateFilter}&end_date=${endDateFilter}`
+      `order_id=${filterData.order_id}&company_id=${
+        companyId ? companyId : filterData.company_id
+      }&store_id=${
+        filterData.store_id
+      }&start_date=${startDateFilter}&end_date=${endDateFilter}`
     );
   };
 
@@ -50,6 +57,7 @@ const FilterOrder = ({ reFetchAllOrders }) => {
       store_id: "",
       company_id: "",
     });
+    setDateFilter();
   };
 
   return (
@@ -66,26 +74,33 @@ const FilterOrder = ({ reFetchAllOrders }) => {
               onChange={onChangeFilterHandler}
             />
           </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-            <FormInput
-              id="store-id"
-              type="text"
-              placeholder="Store ID"
-              name="store_id"
-              value={filterData.store_id}
-              onChange={onChangeFilterHandler}
-            />
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-            <FormInput
-              id="company-id"
-              type="text"
-              placeholder="Company ID"
-              name="company_id"
-              value={filterData.company_id}
-              onChange={onChangeFilterHandler}
-            />
-          </div>
+          {!storeId && user.role !== "store-manager" && (
+            <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
+              <FormInput
+                id="store-id"
+                type="text"
+                placeholder="Store ID"
+                name="store_id"
+                value={filterData.store_id}
+                onChange={onChangeFilterHandler}
+              />
+            </div>
+          )}
+          {!companyId &&
+            user.role !== "company-manager" &&
+            !storeId &&
+            user.role !== "store-manager" && (
+              <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
+                <FormInput
+                  id="company-id"
+                  type="text"
+                  placeholder="Company ID"
+                  name="company_id"
+                  value={filterData.company_id}
+                  onChange={onChangeFilterHandler}
+                />
+              </div>
+            )}
           <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
             <div className="relative text-slate-500">
               <Lucide

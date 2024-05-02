@@ -13,7 +13,7 @@ import FilterCustomer from "./FilterCustomer";
 
 import useAllCustomers from "../../apis/customer/Customers";
 
-const CustomerList = () => {
+const CustomerList = ({ companyId, storeId }) => {
   const navigate = useNavigate();
 
   const {
@@ -26,7 +26,13 @@ const CustomerList = () => {
   const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
-    allCustomersReq();
+    if (companyId) {
+      allCustomersReq(`company_id=${companyId}`);
+    } else if (storeId) {
+      allCustomersReq(`store_id=${storeId}`);
+    } else {
+      allCustomersReq();
+    }
   }, []);
 
   return (
@@ -54,7 +60,11 @@ const CustomerList = () => {
         </div>
 
         {showFilter && (
-          <FilterCustomer reFetchAllCustomers={reFetchAllCustomers} />
+          <FilterCustomer
+            reFetchAllCustomers={reFetchAllCustomers}
+            companyId={companyId}
+            storeId={storeId}
+          />
         )}
 
         {isLoadingAllCustomers ? (

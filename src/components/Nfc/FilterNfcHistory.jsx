@@ -28,8 +28,8 @@ const FilterNfcHistory = ({ reFetchAllNfcs }) => {
 
       const startDate = moment(start, "DD MMM, YYYY");
       const endDate = moment(end, "DD MMM, YYYY");
-      const formattedStartDate = startDate.format("DD/MM/YYYY");
-      const formattedEndDate = endDate.format("DD/MM/YYYY");
+      const formattedStartDate = startDate.format("YYYY-MM-DD");
+      const formattedEndDate = endDate.format("YYYY-MM-DD");
 
       setStartDateFilter(formattedStartDate);
       setEndDateFilter(formattedEndDate);
@@ -48,6 +48,7 @@ const FilterNfcHistory = ({ reFetchAllNfcs }) => {
       barcode: "",
       employee_id: "",
     });
+    setDateFilter();
   };
 
   return (

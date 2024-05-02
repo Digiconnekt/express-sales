@@ -102,7 +102,12 @@ const StoreList = ({ reFetchCard, companyId }) => {
           </div>
         </div>
 
-        {showFilter && <FilterStore reFetchAllStores={reFetchAllStores} />}
+        {showFilter && (
+          <FilterStore
+            reFetchAllStores={reFetchAllStores}
+            companyId={companyId}
+          />
+        )}
 
         {isLoadingAllStores ? (
           <p className="text-center mt-5 bg-white p-5 text-md">loading...</p>
@@ -149,7 +154,7 @@ const StoreList = ({ reFetchCard, companyId }) => {
                       <Table.Tr key={i} className="intro-x">
                         <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           <Link
-                            to={`/store`}
+                            to={`/store/${store.id}`}
                             className="font-medium whitespace-nowrap"
                           >
                             {store.store_title || "-"}
