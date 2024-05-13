@@ -9,7 +9,6 @@ const index = ({ cards, cardType, setCardType, isLoading }) => {
       {cards.map((card, i) => (
         <div
           key={i}
-          className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-3 2xl:col-span-2 intro-y"
           onClick={() => setCardType(card.cardType)}
           onMouseEnter={() => setCardHover(card.cardType)}
           onMouseLeave={() => setCardHover("")}

@@ -83,7 +83,7 @@ const index = () => {
           <div className="grid grid-cols-12 gap-6">
             {/* BEGIN: General Report */}
             <div className="col-span-12 mt-8">
-              <div className="grid grid-cols-12 gap-6 mt-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-5">
                 <Card
                   cards={cardsData}
                   cardType={cardType}
