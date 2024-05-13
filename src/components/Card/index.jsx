@@ -8,18 +8,13 @@ const index = ({ cards, cardType, setCardType, isLoading }) => {
     <>
       {cards.map((card, i) => (
         <div
+          key={i}
           className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-3 2xl:col-span-2 intro-y"
           onClick={() => setCardType(card.cardType)}
-          key={i}
+          onMouseEnter={() => setCardHover(card.cardType)}
+          onMouseLeave={() => setCardHover("")}
         >
-          <div
-            className={clsx([
-              "relative zoom-in",
-              "before:content-[''] before:w-[90%] before:shadow-[0px_3px_20px_#0000000b] before:bg-slate-50 before:h-full before:mt-3 before:absolute before:rounded-md before:mx-auto before:inset-x-0 before:dark:bg-darkmode-400/70",
-            ])}
-            onMouseEnter={() => setCardHover(card.cardType)}
-            onMouseLeave={() => setCardHover("")}
-          >
+          <div className={clsx(["relative zoom-in"])}>
             <div
               className={`p-5 box ${
                 cardType === card.cardType
