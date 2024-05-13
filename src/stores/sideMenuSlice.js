@@ -45,7 +45,7 @@ const initialState = {
     {
       icon: "Bell",
       pathname: "/notification",
-      title: "Send Notification",
+      title: "Notification",
       show: {
         master: true,
         "company-manager": true,
