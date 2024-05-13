@@ -28,31 +28,46 @@ const index = () => {
   const cardsData = [
     {
       title: "Companies",
-      icon: "ShoppingCart",
+      icon: {
+        black: "../../../images/company-icon-b.png",
+        white: "../../../images/company-icon-w.png",
+      },
       cardType: "company",
       count: companyCount,
     },
     {
       title: "Stores",
-      icon: "CreditCard",
+      icon: {
+        black: "../../../images/store-icon-b.png",
+        white: "../../../images/store-icon-w.png",
+      },
       cardType: "store",
       count: storeCount,
     },
     {
       title: "Revenue",
-      icon: "CreditCard",
+      icon: {
+        black: "../../../images/revenue-icon-b.png",
+        white: "../../../images/revenue-icon-w.png",
+      },
       cardType: "revenue",
       count: revenueCount,
     },
     {
       title: "Orders",
-      icon: "ShoppingCart",
+      icon: {
+        black: "../../../images/order-icon-b.png",
+        white: "../../../images/order-icon-w.png",
+      },
       cardType: "order",
       count: orderCount,
     },
     {
       title: "Customers",
-      icon: "User",
+      icon: {
+        black: "../../../images/customer-icon-b.png",
+        white: "../../../images/customer-icon-w.png",
+      },
       cardType: "customer",
       count: customerCount,
     },

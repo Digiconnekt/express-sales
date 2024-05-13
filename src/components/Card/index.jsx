@@ -1,7 +1,9 @@
 import clsx from "clsx";
-import Lucide from "../../base-components/Lucide";
+import { useState } from "react";
 
 const index = ({ cards, cardType, setCardType, isLoading }) => {
+  const [cardHover, setCardHover] = useState("");
+
   return (
     <>
       {cards.map((card, i) => (
@@ -15,6 +17,8 @@ const index = ({ cards, cardType, setCardType, isLoading }) => {
               "relative zoom-in",
               "before:content-[''] before:w-[90%] before:shadow-[0px_3px_20px_#0000000b] before:bg-slate-50 before:h-full before:mt-3 before:absolute before:rounded-md before:mx-auto before:inset-x-0 before:dark:bg-darkmode-400/70",
             ])}
+            onMouseEnter={() => setCardHover(card.cardType)}
+            onMouseLeave={() => setCardHover("")}
           >
             <div
               className={`p-5 box ${
@@ -23,19 +27,29 @@ const index = ({ cards, cardType, setCardType, isLoading }) => {
                   : "hover:bg-primary hover:text-white"
               }`}
             >
-              <div className="flex">
-                <Lucide icon={card.icon} className="w-[28px] h-[28px]" />
+              <div className="flex items-center justify-between">
+                <div className="text-3xl font-medium leading-8">
+                  {isLoading ? (
+                    <span className="text-xs">loading...</span>
+                  ) : card.cardType === "revenue" ? (
+                    `₹ ${card.count || 0}`
+                  ) : (
+                    card.count || 0
+                  )}{" "}
+                  <div className="mt-1 text-base">{card.title}</div>
+                </div>
+                <div className="flex">
+                  <img
+                    src={
+                      cardType === card.cardType || cardHover === card.cardType
+                        ? card.icon.white
+                        : card.icon.black
+                    }
+                    alt={card.title}
+                    className="w-10 h-10"
+                  />
+                </div>
               </div>
-              <div className="mt-6 text-3xl font-medium leading-8">
-                {isLoading ? (
-                  <span className="text-xs">loading...</span>
-                ) : card.cardType === "revenue" ? (
-                  `₹ ${card.count || 0}`
-                ) : (
-                  card.count || 0
-                )}{" "}
-              </div>
-              <div className="mt-1 text-base">{card.title}</div>
             </div>
           </div>
         </div>
