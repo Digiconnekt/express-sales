@@ -1,18 +1,19 @@
 import { Transition } from "react-transition-group";
 import { useState, useEffect, createRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { toRaw } from "../../utils/helper";
 import { selectSideMenu } from "../../stores/sideMenuSlice";
 import { useAppSelector } from "../../stores/hooks";
 import { nestedMenu } from "../../layouts/SideMenu/side-menu";
 import { linkTo, enter, leave } from "./mobile-menu";
 import Lucide from "../../base-components/Lucide";
-import logoUrl from "../../assets/images/logo.svg";
 import clsx from "clsx";
 import SimpleBar from "simplebar";
+import { useSelector } from "react-redux";
 
 function Main() {
   const location = useLocation();
+  const user = useSelector((state) => state.auth.user);
   const [formattedMenu, setFormattedMenu] = useState([]);
   const sideMenuStore = useAppSelector(selectSideMenu);
   const mobileMenu = () => nestedMenu(toRaw(sideMenuStore), location);
@@ -38,13 +39,13 @@ function Main() {
         ])}
       >
         <div className="h-[70px] px-3 sm:px-8 flex items-center">
-          <a href="" className="flex mr-auto">
+          <NavLink to="/" className="flex mr-auto">
             <img
-              alt="Midone Tailwind HTML Admin Template"
+              alt="Express Sales"
               className="w-6"
-              src={logoUrl}
+              src={"../../../images/logo-white.png"}
             />
-          </a>
+          </NavLink>
           <a href="#" onClick={(e) => e.preventDefault()}>
             <Lucide
               icon="BarChart2"
@@ -82,94 +83,96 @@ function Main() {
           </a>
           <ul className="py-2">
             {/* BEGIN: First Child */}
-            {formattedMenu.map((menu, menuKey) =>
-              menu == "divider" ? (
-                <Divider as="li" className="my-6" key={menuKey}></Divider>
-              ) : (
-                <li key={menuKey}>
-                  <Menu
-                    menu={menu}
-                    formattedMenuState={[formattedMenu, setFormattedMenu]}
-                    level="first"
-                    setActiveMobileMenu={setActiveMobileMenu}
-                  ></Menu>
-                  {/* BEGIN: Second Child */}
-                  {menu.subMenu && (
-                    <Transition
-                      in={menu.activeDropdown}
-                      onEnter={enter}
-                      onExit={leave}
-                      timeout={300}
-                    >
-                      <ul
-                        className={clsx([
-                          "bg-black/10 rounded-lg mx-4 my-1 dark:bg-darkmode-700",
-                          !menu.activeDropdown && "hidden",
-                          menu.activeDropdown && "block",
-                        ])}
+            {formattedMenu
+              .filter((menu) => menu.show[user.role])
+              .map((menu, menuKey) =>
+                menu == "divider" ? (
+                  <Divider as="li" className="my-6" key={menuKey}></Divider>
+                ) : (
+                  <li key={menuKey}>
+                    <Menu
+                      menu={menu}
+                      formattedMenuState={[formattedMenu, setFormattedMenu]}
+                      level="first"
+                      setActiveMobileMenu={setActiveMobileMenu}
+                    ></Menu>
+                    {/* BEGIN: Second Child */}
+                    {menu.subMenu && (
+                      <Transition
+                        in={menu.activeDropdown}
+                        onEnter={enter}
+                        onExit={leave}
+                        timeout={300}
                       >
-                        {menu.subMenu.map((subMenu, subMenuKey) => (
-                          <li
-                            className="max-w-[1280px] w-full mx-auto"
-                            key={subMenuKey}
-                          >
-                            <Menu
-                              menu={subMenu}
-                              formattedMenuState={[
-                                formattedMenu,
-                                setFormattedMenu,
-                              ]}
-                              level="second"
-                              setActiveMobileMenu={setActiveMobileMenu}
-                            ></Menu>
-                            {/* BEGIN: Third Child */}
-                            {subMenu.subMenu && (
-                              <Transition
-                                in={subMenu.activeDropdown}
-                                onEnter={enter}
-                                onExit={leave}
-                                timeout={300}
-                              >
-                                <ul
-                                  className={clsx([
-                                    "bg-black/10 rounded-lg my-1 dark:bg-darkmode-600",
-                                    !subMenu.activeDropdown && "hidden",
-                                    subMenu.activeDropdown && "block",
-                                  ])}
+                        <ul
+                          className={clsx([
+                            "bg-black/10 rounded-lg mx-4 my-1 dark:bg-darkmode-700",
+                            !menu.activeDropdown && "hidden",
+                            menu.activeDropdown && "block",
+                          ])}
+                        >
+                          {menu.subMenu.map((subMenu, subMenuKey) => (
+                            <li
+                              className="max-w-[1280px] w-full mx-auto"
+                              key={subMenuKey}
+                            >
+                              <Menu
+                                menu={subMenu}
+                                formattedMenuState={[
+                                  formattedMenu,
+                                  setFormattedMenu,
+                                ]}
+                                level="second"
+                                setActiveMobileMenu={setActiveMobileMenu}
+                              ></Menu>
+                              {/* BEGIN: Third Child */}
+                              {subMenu.subMenu && (
+                                <Transition
+                                  in={subMenu.activeDropdown}
+                                  onEnter={enter}
+                                  onExit={leave}
+                                  timeout={300}
                                 >
-                                  {subMenu.subMenu.map(
-                                    (lastSubMenu, lastSubMenuKey) => (
-                                      <li
-                                        className="max-w-[1280px] w-full mx-auto"
-                                        key={lastSubMenuKey}
-                                      >
-                                        <Menu
-                                          menu={lastSubMenu}
-                                          formattedMenuState={[
-                                            formattedMenu,
-                                            setFormattedMenu,
-                                          ]}
-                                          level="third"
-                                          setActiveMobileMenu={
-                                            setActiveMobileMenu
-                                          }
-                                        ></Menu>
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </Transition>
-                            )}
-                            {/* END: Third Child */}
-                          </li>
-                        ))}
-                      </ul>
-                    </Transition>
-                  )}
-                  {/* END: Second Child */}
-                </li>
-              )
-            )}
+                                  <ul
+                                    className={clsx([
+                                      "bg-black/10 rounded-lg my-1 dark:bg-darkmode-600",
+                                      !subMenu.activeDropdown && "hidden",
+                                      subMenu.activeDropdown && "block",
+                                    ])}
+                                  >
+                                    {subMenu.subMenu.map(
+                                      (lastSubMenu, lastSubMenuKey) => (
+                                        <li
+                                          className="max-w-[1280px] w-full mx-auto"
+                                          key={lastSubMenuKey}
+                                        >
+                                          <Menu
+                                            menu={lastSubMenu}
+                                            formattedMenuState={[
+                                              formattedMenu,
+                                              setFormattedMenu,
+                                            ]}
+                                            level="third"
+                                            setActiveMobileMenu={
+                                              setActiveMobileMenu
+                                            }
+                                          ></Menu>
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                </Transition>
+                              )}
+                              {/* END: Third Child */}
+                            </li>
+                          ))}
+                        </ul>
+                      </Transition>
+                    )}
+                    {/* END: Second Child */}
+                  </li>
+                )
+              )}
             {/* END: First Child */}
           </ul>
         </div>

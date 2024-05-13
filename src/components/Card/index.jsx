@@ -8,7 +8,7 @@ const index = ({ cards, cardType, setCardType, isLoading }) => {
     <>
       {cards.map((card, i) => (
         <div
-          className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2 intro-y"
+          className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-3 2xl:col-span-2 intro-y"
           onClick={() => setCardType(card.cardType)}
           key={i}
         >

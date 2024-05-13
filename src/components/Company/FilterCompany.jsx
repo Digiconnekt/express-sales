@@ -10,6 +10,7 @@ const FilterCompany = ({ reFetchAllCompanies }) => {
   const [startDateFilter, setStartDateFilter] = useState("");
   const [endDateFilter, setEndDateFilter] = useState("");
   const [filterData, setFilterData] = useState({
+    id: "",
     name: "",
     company_email: "",
     location: "",
@@ -39,13 +40,14 @@ const FilterCompany = ({ reFetchAllCompanies }) => {
 
   const filterHandler = () => {
     reFetchAllCompanies(
-      `name=${filterData.name}&company_email=${filterData.company_email}&location=${filterData.location}&start_date=${startDateFilter}&end_date=${endDateFilter}`
+      `id=${filterData.id}&name=${filterData.name}&company_email=${filterData.company_email}&location=${filterData.location}&start_date=${startDateFilter}&end_date=${endDateFilter}`
     );
   };
 
   const resetFilterHandler = () => {
     reFetchAllCompanies();
     setFilterData({
+      id: "",
       name: "",
       company_email: "",
       location: "",
@@ -57,6 +59,16 @@ const FilterCompany = ({ reFetchAllCompanies }) => {
     <>
       <div className="bg-white mt-5 p-3 rounded-md">
         <div className="grid grid-cols-12 items-center gap-5">
+          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
+            <FormInput
+              id="compnay-id"
+              type="text"
+              placeholder="Company Id"
+              name="id"
+              value={filterData.id}
+              onChange={onChangeFilterHandler}
+            />
+          </div>
           <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
             <FormInput
               id="manager-name"
