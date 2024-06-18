@@ -16,7 +16,6 @@ const FilterCustomer = ({ reFetchAllCustomers, companyId, storeId }) => {
     store_id: "",
     company_id: "",
     email: "",
-    contact_no: "",
   });
 
   const onChangeFilterHandler = (e) => {
@@ -45,8 +44,8 @@ const FilterCustomer = ({ reFetchAllCustomers, companyId, storeId }) => {
     reFetchAllCustomers(
       `store_id=${filterData.store_id}&company_id=${
         companyId ? companyId : filterData.company_id
-      }&email=${filterData.email}&contact_no=${
-        filterData.contact_no
+      }&email=${
+        filterData.email
       }&start_date=${startDateFilter}&end_date=${endDateFilter}`
     );
   };
@@ -57,7 +56,6 @@ const FilterCustomer = ({ reFetchAllCustomers, companyId, storeId }) => {
       store_id: "",
       company_id: "",
       email: "",
-      contact_no: "",
     });
     setDateFilter();
   };
@@ -100,16 +98,6 @@ const FilterCustomer = ({ reFetchAllCustomers, companyId, storeId }) => {
               placeholder="Email"
               name="email"
               value={filterData.email}
-              onChange={onChangeFilterHandler}
-            />
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-            <FormInput
-              id="contact"
-              type="text"
-              placeholder="Contact No."
-              name="contact_no"
-              value={filterData.contact_no}
               onChange={onChangeFilterHandler}
             />
           </div>

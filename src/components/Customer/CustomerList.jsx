@@ -106,15 +106,10 @@ const CustomerList = ({ companyId, storeId }) => {
                     {dataAllCustomers?.data?.map((customer, i) => (
                       <Table.Tr key={i} className="intro-x">
                         <Table.Td className="first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          <Link
-                            to={`#`}
-                            className="font-medium whitespace-nowrap"
-                          >
-                            {customer.name || "-"}
-                          </Link>
+                          {customer.name || "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
-                          {customer.customer_id || "-"}
+                          {customer.id || "-"}
                         </Table.Td>
                         <Table.Td className="first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]">
                           {customer.email || "-"}
